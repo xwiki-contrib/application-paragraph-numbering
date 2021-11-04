@@ -14,7 +14,7 @@
 }
 
 /* Use CSS counters in edit mode so that list numbers are updated while typing. */
-.numbered-lists-edit ol:not(.skip-numbering):first-of-type {
+.numbered-lists-edit ol:not(.skip-numbering):first-of-type, .numbered-lists-view ol:not(.skip-numbering):first-of-type {
   /* Each nested list should start a nested counter from 1. */
   counter-reset: numbering;
 }
@@ -49,14 +49,10 @@
   margin-bottom: revert;
 }
 
-.numbered-lists-edit ol > li::before {
+.numbered-lists-edit ol > li::before, .numbered-lists-view ol > li::before {
   /* Increment nested counters with each list item. */
   counter-increment: numbering;
   content: var(--numbering-prefix, "") counters(numbering, ".") " ";
-}
-
-.numbered-lists-view ol > li::before {
-  content: attr(data-numbering);
 }
 
 .numbered-lists ol > li::before {
@@ -71,4 +67,3 @@
   position: revert;
   margin-left: revert;
 }
-

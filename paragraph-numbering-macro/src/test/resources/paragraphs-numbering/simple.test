@@ -3,14 +3,15 @@
 .input|xwiki/2.1
 .# Test the macro on a simple case with the default parameters.
 .#-----------------------------------------------------
-{{paragraph-numbering}}
+{{paragraphs-numbering}}
 1. 1
-{{/paragraph-numbering}}
+{{/paragraphs-numbering}}
 .#-----------------------------------------------------
 .expect|xhtml/1.0
 .#-----------------------------------------------------
 <div style="--numbering-prefix: '';" id="generated-id" class="numbered-lists"><style>
-#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
+#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type,
+#generated-id > .numbered-lists-view > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
   counter-reset: numbering 0;
 }
 </style><div class="numbered-lists-view"><ol><li>1</li></ol></div><div class="numbered-lists-edit"><ol><li>1</li></ol></div></div>
@@ -18,10 +19,11 @@
 .expect|event/1.0
 .#-----------------------------------------------------
 beginDocument
-beginMacroMarkerStandalone [paragraph-numbering] [] [1. 1]
+beginMacroMarkerStandalone [paragraphs-numbering] [] [1. 1]
 beginGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '';]]
 onRawText [<style>
-#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
+#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type,
+#generated-id > .numbered-lists-view > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
   counter-reset: numbering 0;
 }
 </style>] [xhtml/1.0]
@@ -42,5 +44,5 @@ endList [NUMBERED]
 endMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
 endGroup [[class]=[numbered-lists-edit]]
 endGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '';]]
-endMacroMarkerStandalone [paragraph-numbering] [] [1. 1]
+endMacroMarkerStandalone [paragraphs-numbering] [] [1. 1]
 endDocument

@@ -141,8 +141,9 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
     {
         return new RawBlock(String.format(
             "<style>\n"
-                + "#%s > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {\n"
-                + "  counter-reset: numbering %d;\n"
+                + "#%1$s > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type,\n" 
+                + "#%1$s > .numbered-lists-view > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {\n"
+                + "  counter-reset: numbering %2$d;\n"
                 + "}\n"
                 + "</style>",
             macroId, offset), Syntax.XHTML_1_0);

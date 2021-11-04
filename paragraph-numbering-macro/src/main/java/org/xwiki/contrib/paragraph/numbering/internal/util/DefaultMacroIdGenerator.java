@@ -17,26 +17,37 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.paragraph.numbering.internal;
+package org.xwiki.contrib.paragraph.numbering.internal.util;
 
-import org.xwiki.contrib.paragraph.numbering.HelloWorld;
-import org.xwiki.component.annotation.Component;
+import java.util.UUID;
 
 import javax.inject.Singleton;
 
+import org.xwiki.component.annotation.Component;
+
 /**
- * Implementation of a <tt>HelloWorld</tt> component.
+ * Generate unique ids for the macros.
  *
- * @version $Id: bd9628432a733c9492b3224ffcc3212d21ad71fe $
+ * @version $Id$
+ * @since 1.0
  */
 @Component
 @Singleton
-public class DefaultHelloWorld implements HelloWorld
+public class DefaultMacroIdGenerator implements MacroIdGenerator
 {
-    @Override
-    public String sayHello()
+    /**
+     * {@inheritDoc}
+     */
+    public String generateId()
     {
-        return "Hello";
+        return generateId("");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String generateId(String prefix)
+    {
+        return String.format("%s%s", prefix, UUID.randomUUID());
     }
 }
-

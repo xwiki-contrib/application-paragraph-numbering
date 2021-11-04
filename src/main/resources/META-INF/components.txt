@@ -1,2 +1,0 @@
-org.xwiki.contrib.paragraph.numbering.internal.DefaultHelloWorld
-org.xwiki.contrib.paragraph.numbering.script.HelloWorldScriptService

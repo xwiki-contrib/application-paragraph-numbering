@@ -17,31 +17,14 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.paragraph.numbering;
-
-import org.junit.jupiter.api.Test;
-import org.xwiki.test.junit5.mockito.ComponentTest;
-import org.xwiki.test.junit5.mockito.InjectMockComponents;
-
-import org.xwiki.contrib.paragraph.numbering.internal.DefaultHelloWorld;
-import org.xwiki.contrib.paragraph.numbering.HelloWorld;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
+package org.xwiki.contrib.paragraph.numbering.internal;
 
 /**
- * Unit tests for the {@link HelloWorld} component.
+ * Display a Table of Paragraphs.
  *
- * @version $Id: 8c8b784b7b02d7bb40c99a062275b56e0b6983c2 $
+ * @version $Id$
+ * @since 1.0
  */
-@ComponentTest
-class HelloWorldTest
+public class TableOfParagraphsMacro
 {
-    @InjectMockComponents
-    private DefaultHelloWorld helloWorld;
-
-    @Test
-    void sayHello() throws Exception
-    {
-        assertEquals("Hello", this.helloWorld.sayHello());
-    }
 }

@@ -1,4 +1,4 @@
-/*
+package org.xwiki.contrib.paragraph.numbering.internal;/*
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -17,23 +17,38 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.paragraph.numbering;
 
-import org.xwiki.component.annotation.Role;
+import org.junit.jupiter.api.Test;
+import org.xwiki.contrib.paragraph.numbering.internal.util.DefaultMacroIdGenerator;
+import org.xwiki.test.junit5.mockito.ComponentTest;
+import org.xwiki.test.junit5.mockito.InjectMockComponents;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Interface (aka Role) of the Component.
+ * Test of {@link DefaultMacroIdGenerator}.
  *
- * @version $Id: f585df8f56ed99e66c0d8d70a0ee1bcc075de017 $
+ * @version $Id$
+ * @since 1.0
  */
-@Role
-public interface HelloWorld
+@ComponentTest
+class DefaultMacroIdGeneratorTest
 {
-    /**
-     * Says hello by returning a greeting to the caller.
-     *
-     * @return a greeting
-     */
-    String sayHello();
-}
+    @InjectMockComponents
+    private DefaultMacroIdGenerator generator;
 
+    @Test
+    void generateId()
+    {
+        String s = this.generator.generateId();
+        assertNotNull(s);
+    }
+
+    @Test
+    void generateIdWithPrefix()
+    {
+        String prefix = this.generator.generateId("prefix-");
+        assertTrue(prefix.startsWith("prefix-"));
+    }
+}

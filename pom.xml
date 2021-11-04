@@ -29,9 +29,10 @@
     <version>12.10.6</version>
   </parent>
   
+  <packaging>pom</packaging>
   <groupId>org.xwiki.contrib.paragraph.numbering</groupId>
   <artifactId>application-paragraph-numbering</artifactId>
-  <name>Paragraph Numbering</name>
+  <name>Paragraph Numbering - Parent Model</name>
   <description>Allows to automatically add number on paragraphs and sub-paragraphs</description>
   <version>1.0-SNAPSHOT</version>
   <developers>
@@ -64,7 +65,6 @@
   <properties>
     <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
     <xwiki.issueManagement.jira.id>PNAPP</xwiki.issueManagement.jira.id>
-    <xwiki.jacoco.instructionRatio>0.41</xwiki.jacoco.instructionRatio>
   </properties>
   <build>
     <plugins>
@@ -84,6 +84,9 @@
       </plugin>
     </plugins>
   </build>
+  <modules>
+    <module>paragraph-numbering-macro</module>
+  </modules>
   <dependencies>
     <dependency>
       <groupId>org.xwiki.commons</groupId>

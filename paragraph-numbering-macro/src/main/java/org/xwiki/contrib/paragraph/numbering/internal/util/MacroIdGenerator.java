@@ -17,35 +17,27 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.paragraph.numbering.script;
+package org.xwiki.contrib.paragraph.numbering.internal.util;
 
-import org.xwiki.component.annotation.Component;
-import org.xwiki.script.service.ScriptService;
-
-import org.xwiki.contrib.paragraph.numbering.HelloWorld;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
+import org.xwiki.component.annotation.Role;
 
 /**
- * Make the HelloWorld API available to scripting.
+ * Generate unique ids for the macros.
  *
- * @version $Id: 9d6e720e780c0f661812f7813756354dc8dde770 $
+ * @version $Id$
+ * @since 1.0
  */
-@Component
-@Named("hello")
-@Singleton
-public class HelloWorldScriptService implements ScriptService
+@Role
+public interface MacroIdGenerator
 {
-    @Inject
-    private HelloWorld helloWorld;
+    /**
+     * @return a unique id without prefix
+     */
+    String generateId();
 
     /**
-     * @return the current hello message
+     * @param prefix the prefix to add to the id
+     * @return a unique id with a prefix
      */
-    public String greet()
-    {
-        return this.helloWorld.sayHello();
-    }
+    String generateId(String prefix);
 }

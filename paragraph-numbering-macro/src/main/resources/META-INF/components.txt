@@ -1,0 +1,2 @@
+org.xwiki.contrib.paragraph.numbering.internal.ParagraphsNumberingMacro
+org.xwiki.contrib.paragraph.numbering.internal.util.DefaultMacroIdGenerator

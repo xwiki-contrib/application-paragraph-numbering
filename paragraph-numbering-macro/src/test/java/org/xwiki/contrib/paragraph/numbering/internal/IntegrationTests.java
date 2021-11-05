@@ -46,8 +46,7 @@ public class IntegrationTests
     {
         Mockery mockery = new JUnit4Mockery();
 
-        final SkinExtension ssrxMock = componentManager.registerMockComponent(mockery, SkinExtension.class, "ssrx");
-
+        SkinExtension ssrxMock = componentManager.registerMockComponent(mockery, SkinExtension.class, "ssrx");
         MacroIdGenerator macroIdGenerator = componentManager.registerMockComponent(mockery, MacroIdGenerator.class);
 
         mockery.checking(new Expectations()

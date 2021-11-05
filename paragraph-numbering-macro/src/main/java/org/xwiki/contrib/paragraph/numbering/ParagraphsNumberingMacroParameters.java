@@ -31,12 +31,15 @@ import org.xwiki.properties.annotation.PropertyDescription;
 public class ParagraphsNumberingMacroParameters
 {
     /**
-     * The starting number of the paragraphs sequence. The default value is 1.
+     * The starting number of the paragraphs sequence. By default, the counter is initialized to the value where the
+     * previous paragraphs numbering macro stopped.
      */
-    private String start = "1";
+    // TODO: consider making the default the empty string, in case we manage to let a macro continue its numbering where
+    // the previous one left. 
+    private String start;
 
     /**
-     * @return the number of the paragraphs sequence. The default value is 1.
+     * @return the number of the paragraphs sequence
      */
     public String getStart()
     {
@@ -44,7 +47,7 @@ public class ParagraphsNumberingMacroParameters
     }
 
     /**
-     * The number of the paragraphs sequence. The default value is 1.
+     * The number of the paragraphs sequence.
      *
      * @param start the starting number of the paragraphs sequence (for instance, {@code 2.1})
      */

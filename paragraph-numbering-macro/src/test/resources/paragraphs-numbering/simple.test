@@ -10,11 +10,10 @@
 .expect|xhtml/1.0
 .#-----------------------------------------------------
 <div style="--numbering-prefix: '';" id="generated-id" class="numbered-lists"><style>
-#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type,
-#generated-id > .numbered-lists-view > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
+#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
   counter-reset: numbering 0;
 }
-</style><div class="numbered-lists-view"><ol><li>1</li></ol></div><div class="numbered-lists-edit"><ol><li>1</li></ol></div></div>
+</style><div class="numbered-lists-view"><ol><li id="P1" data-numbering="2">1</li></ol></div><div class="numbered-lists-edit"><ol><li id="P3" data-numbering="3">1</li></ol></div></div>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
@@ -22,24 +21,23 @@ beginDocument
 beginMacroMarkerStandalone [paragraphs-numbering] [] [1. 1]
 beginGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '';]]
 onRawText [<style>
-#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type,
-#generated-id > .numbered-lists-view > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
+#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
   counter-reset: numbering 0;
 }
 </style>] [xhtml/1.0]
 beginGroup [[class]=[numbered-lists-view]]
 beginList [NUMBERED]
-beginListItem
+beginListItem [[data-numbering]=[2][id]=[P1]]
 onWord [1]
-endListItem
+endListItem [[data-numbering]=[2][id]=[P1]]
 endList [NUMBERED]
 endGroup [[class]=[numbered-lists-view]]
 beginGroup [[class]=[numbered-lists-edit]]
 beginMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
 beginList [NUMBERED]
-beginListItem
+beginListItem [[data-numbering]=[3][id]=[P3]]
 onWord [1]
-endListItem
+endListItem [[data-numbering]=[3][id]=[P3]]
 endList [NUMBERED]
 endMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
 endGroup [[class]=[numbered-lists-edit]]

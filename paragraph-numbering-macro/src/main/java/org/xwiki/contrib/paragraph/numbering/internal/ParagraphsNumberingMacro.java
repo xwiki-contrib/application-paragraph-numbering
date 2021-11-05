@@ -31,18 +31,24 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.tools.generic.EscapeTool;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.context.Execution;
+import org.xwiki.context.ExecutionContextManager;
 import org.xwiki.contrib.paragraph.numbering.ParagraphsNumberingMacroParameters;
 import org.xwiki.contrib.paragraph.numbering.internal.util.MacroIdGenerator;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.GroupBlock;
 import org.xwiki.rendering.block.MetaDataBlock;
 import org.xwiki.rendering.block.RawBlock;
+import org.xwiki.rendering.block.XDOM;
 import org.xwiki.rendering.macro.AbstractMacro;
 import org.xwiki.rendering.macro.MacroContentParser;
 import org.xwiki.rendering.macro.MacroExecutionException;
 import org.xwiki.rendering.macro.descriptor.DefaultContentDescriptor;
 import org.xwiki.rendering.syntax.Syntax;
 import org.xwiki.rendering.transformation.MacroTransformationContext;
+import org.xwiki.rendering.transformation.Transformation;
+import org.xwiki.rendering.transformation.TransformationContext;
+import org.xwiki.rendering.transformation.TransformationException;
 import org.xwiki.skinx.SkinExtension;
 
 import static java.util.Arrays.asList;
@@ -63,6 +69,11 @@ import static org.xwiki.text.StringUtils.isEmpty;
 @Singleton
 public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingMacroParameters>
 {
+    /**
+     * Key of the paragraphs indexes in the context.
+     */
+    public static final String CONTEXT_INDEXES = "paragraphs-numbering-macro-indexes";
+
     private static final EscapeTool ESCAPE_TOOL = new EscapeTool();
 
     private static final String CLASS_PARAMETER = "class";
@@ -80,12 +91,22 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
     @Inject
     private MacroIdGenerator macroIdGenerator;
 
+    @Inject
+    @Named("paragraphs-ids")
+    private Transformation paragraphsIdsTransformation;
+
+    @Inject
+    private ExecutionContextManager contextManager;
+
+    @Inject
+    private Execution execution;
+
     /**
      * Default constructor. Create and initialize the macro descriptor.
      */
     public ParagraphsNumberingMacro()
     {
-        super("ParagraphNumbering", "Automatically add numbers on the paragraphs contained in the body of the macro",
+        super("Paragraphs Numbering", "Automatically add numbers on the paragraphs contained in the body of the macro",
             new DefaultContentDescriptor("body", false, LIST_BLOCK_TYPE), ParagraphsNumberingMacroParameters.class);
         setDefaultCategory(DEFAULT_CATEGORY_NAVIGATION);
     }
@@ -100,21 +121,45 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
     public List<Block> execute(ParagraphsNumberingMacroParameters parameters, String content,
         MacroTransformationContext context) throws MacroExecutionException
     {
-        int[] startIndexes = parseStartParameter(parameters.getStart());
+        int[] startIndexes = initializeStartIndexes(parameters, context);
         int offset = Math.max(0, startIndexes[startIndexes.length - 1] - 1);
         String macroId = this.macroIdGenerator.generateId("numbered-lists-");
         String prefix = computePrefix(startIndexes);
 
         this.ssrx.use("macroedit.css");
 
-        List<Block> contentBlock = this.contentParser.parse(content, context, false, context.isInline())
-            .getChildren();
+        XDOM parse = this.contentParser.parse(content, context, false, context.isInline());
 
-        return singletonList(new GroupBlock(asList(
-            getDynamicCssBlock(offset, macroId),
-            getViewBlock(contentBlock),
-            getEditBlock(contentBlock)
-        ), rootBlockParameters(macroId, prefix)));
+        try {
+            return singletonList(new GroupBlock(asList(
+                getDynamicCssBlock(offset, macroId),
+                getViewBlock(parse, context.getSyntax(), context.getTransformationContext()),
+                getEditBlock(parse.getChildren())
+            ), rootBlockParameters(macroId, prefix)));
+        } catch (TransformationException e) {
+            throw new MacroExecutionException("Failed to transform the macro content", e);
+        }
+    }
+
+    private int[] initializeStartIndexes(ParagraphsNumberingMacroParameters parameters,
+        MacroTransformationContext context) throws MacroExecutionException
+    {
+        int[] startIndexes;
+        String key =
+            String.format("%d.%s", System.identityHashCode(context.getTransformationContext()), CONTEXT_INDEXES);
+        if (parameters.getStart() != null) {
+            startIndexes = parseStartParameter(parameters.getStart());
+
+            this.execution.getContext().setProperty(key, startIndexes);
+        } else {
+            if (this.execution.getContext().getProperty(key) == null) {
+                this.execution.getContext().setProperty(key, new int[] { 1 });
+                startIndexes = new int[] { 1 };
+            } else {
+                startIndexes = (int[]) this.execution.getContext().getProperty(key);
+            }
+        }
+        return startIndexes;
     }
 
     private GroupBlock getEditBlock(List<Block> contentBlock)
@@ -125,9 +170,14 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
             singletonMap(CLASS_PARAMETER, "numbered-lists-edit"));
     }
 
-    private GroupBlock getViewBlock(List<Block> contentBlock)
+    private GroupBlock getViewBlock(XDOM parse, Syntax syntax, TransformationContext context)
+        throws TransformationException
     {
-        return new GroupBlock(contentBlock, singletonMap(CLASS_PARAMETER, "numbered-lists-view"));
+        // Clone the XDOM before transforming it because we don't want to modify the XDOM used in the edit block.
+        XDOM newXdom = parse.clone();
+        this.paragraphsIdsTransformation.transform(newXdom, context);
+        
+        return new GroupBlock(newXdom.getChildren(), singletonMap(CLASS_PARAMETER, "numbered-lists-view"));
     }
 
     /**
@@ -141,8 +191,7 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
     {
         return new RawBlock(String.format(
             "<style>\n"
-                + "#%1$s > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type,\n" 
-                + "#%1$s > .numbered-lists-view > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {\n"
+                + "#%1$s > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {\n"
                 + "  counter-reset: numbering %2$d;\n"
                 + "}\n"
                 + "</style>",

@@ -40,7 +40,7 @@
     <xwiki.extension.name>Paragraph Numbering Macro</xwiki.extension.name>
     <xwiki.extension.category>macro</xwiki.extension.category>
     <!--        <xwiki.extension.icon>branch</xwiki.extension.icon>-->
-    <xwiki.jacoco.instructionRatio>0.90</xwiki.jacoco.instructionRatio>
+    <xwiki.jacoco.instructionRatio>0.82</xwiki.jacoco.instructionRatio>
   </properties>
   <dependencies>
     <dependency>
@@ -51,7 +51,7 @@
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-skin-api</artifactId>
-      <version>6.4.1</version>
+      <version>${platform.version}</version>
     </dependency>
     <dependency>
       <groupId>org.xwiki.commons</groupId>

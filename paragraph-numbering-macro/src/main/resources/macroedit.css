@@ -49,10 +49,14 @@
   margin-bottom: revert;
 }
 
-.numbered-lists-edit ol > li::before, .numbered-lists-view ol > li::before {
+.numbered-lists-edit ol > li::before {
   /* Increment nested counters with each list item. */
   counter-increment: numbering;
   content: var(--numbering-prefix, "") counters(numbering, ".") " ";
+}
+
+.numbered-lists-view ol > li::before {
+  content: attr(data-numbering);
 }
 
 .numbered-lists ol > li::before {

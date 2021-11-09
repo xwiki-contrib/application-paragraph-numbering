@@ -34,8 +34,6 @@ public class ParagraphsNumberingMacroParameters
      * The starting number of the paragraphs sequence. By default, the counter is initialized to the value where the
      * previous paragraphs numbering macro stopped.
      */
-    // TODO: consider making the default the empty string, in case we manage to let a macro continue its numbering where
-    // the previous one left. 
     private String start;
 
     /**
@@ -43,7 +41,7 @@ public class ParagraphsNumberingMacroParameters
      */
     public String getStart()
     {
-        return start;
+        return this.start;
     }
 
     /**

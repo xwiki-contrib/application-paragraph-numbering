@@ -54,7 +54,7 @@ public class TableOfParagraphsMacroParameters
      */
     public int getDepth()
     {
-        return depth;
+        return this.depth;
     }
 
     /**
@@ -70,7 +70,7 @@ public class TableOfParagraphsMacroParameters
      */
     public Scope getScope()
     {
-        return scope;
+        return this.scope;
     }
 
     /**

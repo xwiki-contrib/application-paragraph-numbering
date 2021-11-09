@@ -32,7 +32,6 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.tools.generic.EscapeTool;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.context.Execution;
-import org.xwiki.context.ExecutionContextManager;
 import org.xwiki.contrib.paragraph.numbering.ParagraphsNumberingMacroParameters;
 import org.xwiki.contrib.paragraph.numbering.internal.util.MacroIdGenerator;
 import org.xwiki.rendering.block.Block;
@@ -65,7 +64,7 @@ import static org.xwiki.text.StringUtils.isEmpty;
  * @since 1.0
  */
 @Component
-@Named("paragraphs-numbering")
+@Named(ParagraphsNumberingMacro.PARAGRAPHS_NUMBERING_MACRO)
 @Singleton
 public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingMacroParameters>
 {
@@ -73,6 +72,11 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
      * Key of the paragraphs indexes in the context.
      */
     public static final String CONTEXT_INDEXES = "paragraphs-numbering-macro-indexes";
+
+    /**
+     * Hint of the paragraphs numbering macro.
+     */
+    public static final String PARAGRAPHS_NUMBERING_MACRO = "paragraphs-numbering";
 
     private static final EscapeTool ESCAPE_TOOL = new EscapeTool();
 
@@ -94,10 +98,7 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
     @Inject
     @Named("paragraphs-ids")
     private Transformation paragraphsIdsTransformation;
-
-    @Inject
-    private ExecutionContextManager contextManager;
-
+    
     @Inject
     private Execution execution;
 
@@ -133,7 +134,7 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
         try {
             return singletonList(new GroupBlock(asList(
                 getDynamicCssBlock(offset, macroId),
-                getViewBlock(parse, context.getSyntax(), context.getTransformationContext()),
+                getViewBlock(parse, context.getTransformationContext()),
                 getEditBlock(parse.getChildren())
             ), rootBlockParameters(macroId, prefix)));
         } catch (TransformationException e) {
@@ -170,13 +171,13 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
             singletonMap(CLASS_PARAMETER, "numbered-lists-edit"));
     }
 
-    private GroupBlock getViewBlock(XDOM parse, Syntax syntax, TransformationContext context)
+    private GroupBlock getViewBlock(XDOM parse, TransformationContext context)
         throws TransformationException
     {
         // Clone the XDOM before transforming it because we don't want to modify the XDOM used in the edit block.
         XDOM newXdom = parse.clone();
         this.paragraphsIdsTransformation.transform(newXdom, context);
-        
+
         return new GroupBlock(newXdom.getChildren(), singletonMap(CLASS_PARAMETER, "numbered-lists-view"));
     }
 

@@ -19,17 +19,19 @@
  */
 package org.xwiki.contrib.paragraph.numbering.internal;
 
-import java.util.Map;
+import java.util.List;
 
-import org.jmock.Expectations;
-import org.jmock.Mockery;
-import org.jmock.integration.junit4.JUnit4Mockery;
-import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.xwiki.contrib.paragraph.numbering.internal.util.MacroIdGenerator;
-import org.xwiki.rendering.test.integration.RenderingTestSuite;
+import org.xwiki.rendering.configuration.RenderingConfiguration;
 import org.xwiki.rendering.test.integration.TestDataParser;
+import org.xwiki.rendering.test.integration.junit5.RenderingTests;
 import org.xwiki.skinx.SkinExtension;
-import org.xwiki.test.jmock.MockingComponentManager;
+import org.xwiki.test.annotation.AllComponents;
+import org.xwiki.test.mockito.MockitoComponentManager;
+
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.when;
 
 /**
  * Run all tests found in {@code *.test} files located in the classpath. These {@code *.test} files must follow the
@@ -38,32 +40,26 @@ import org.xwiki.test.jmock.MockingComponentManager;
  * @version $Id$
  * @since 1.0
  */
-@RunWith(RenderingTestSuite.class)
-public class IntegrationTests
+@AllComponents
+public class IntegrationTests implements RenderingTests
 {
-    @RenderingTestSuite.Initialized
-    public void initialize(MockingComponentManager componentManager) throws Exception
+    @RenderingTests.Initialized
+    public void initialize(MockitoComponentManager componentManager) throws Exception
     {
-        Mockery mockery = new JUnit4Mockery();
+        componentManager.registerMockComponent(SkinExtension.class, "ssrx");
 
-        SkinExtension ssrxMock = componentManager.registerMockComponent(mockery, SkinExtension.class, "ssrx");
-        MacroIdGenerator macroIdGenerator = componentManager.registerMockComponent(mockery, MacroIdGenerator.class);
+        MacroIdGenerator macroIdGenerator = componentManager.registerMockComponent(MacroIdGenerator.class);
+        when(macroIdGenerator.generateId(anyString())).thenReturn("generated-id");
 
-        mockery.checking(new Expectations()
-        {
-            {
-                allowing(macroIdGenerator).generateId(with(any(String.class)));
-                will(returnValue("generated-id"));
-            }
-        });
-
-        mockery.checking(new Expectations()
-        {
-            {
-                String cssPath = "macroedit.css";
-                allowing(ssrxMock).use(with(cssPath));
-                allowing(ssrxMock).use(with(cssPath), with(any(Map.class)));
-            }
+        // Spy on the rendering configuration to exclude `paragraphs-ids` from the configuration, to prevent it to be 
+        // called twice, once during the macro execution and once when the transformations are called.
+        RenderingConfiguration renderingConfiguration = componentManager.getInstance(RenderingConfiguration.class);
+        RenderingConfiguration spy = Mockito.spy(renderingConfiguration);
+        componentManager.registerComponent(RenderingConfiguration.class, spy);
+        final List<String> transformationNames = spy.getTransformationNames();
+        when(spy.getTransformationNames()).thenAnswer(invocationOnMock -> {
+            transformationNames.remove("paragraphs-ids");
+            return transformationNames;
         });
     }
 }

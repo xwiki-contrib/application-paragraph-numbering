@@ -19,21 +19,30 @@
  */
 package org.xwiki.contrib.paragraph.numbering.internal;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.paragraph.numbering.TableOfParagraphsMacroParameters;
+import org.xwiki.contrib.paragraph.numbering.internal.util.ParagraphsTreeService;
 import org.xwiki.rendering.block.Block;
-import org.xwiki.rendering.block.GroupBlock;
+import org.xwiki.rendering.block.ListItemBlock;
+import org.xwiki.rendering.block.match.BlockMatcher;
+import org.xwiki.rendering.block.match.MacroMarkerBlockMatcher;
 import org.xwiki.rendering.macro.AbstractMacro;
 import org.xwiki.rendering.macro.MacroExecutionException;
 import org.xwiki.rendering.transformation.MacroTransformationContext;
 
-import static java.util.Collections.emptyList;
-import static java.util.Collections.singletonList;
+import static org.xwiki.contrib.paragraph.numbering.TableOfParagraphsMacroParameters.Scope.PAGE;
+import static org.xwiki.contrib.paragraph.numbering.internal.ParagraphsNumberingMacro.PARAGRAPHS_NUMBERING_MACRO;
+import static org.xwiki.contrib.paragraph.numbering.internal.transformation.ParagraphsIdsTransformation.DATA_NUMBERING_PARAMETER;
+import static org.xwiki.rendering.block.Block.Axes.DESCENDANT;
 
 /**
  * Display a Table of Paragraphs.
@@ -46,6 +55,67 @@ import static java.util.Collections.singletonList;
 @Singleton
 public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacroParameters>
 {
+    @Inject
+    private ParagraphsTreeService paragraphsTreeService;
+
+    private static class NumberedParagraphsMatcher implements BlockMatcher
+    {
+        private final MacroMarkerBlockMatcher macroMarkerBlockMatcher =
+            new MacroMarkerBlockMatcher(PARAGRAPHS_NUMBERING_MACRO);
+
+        private final Block xdom;
+
+        private final int depth;
+
+        NumberedParagraphsMatcher(Block xdom, int depth)
+        {
+            this.xdom = xdom;
+            this.depth = depth;
+        }
+
+        @Override
+        public boolean match(Block block)
+        {
+            return block instanceof ListItemBlock
+                && block.getParameters().containsKey(DATA_NUMBERING_PARAMETER)
+                && depth(block) <= this.depth
+                && isInANumberedParagraphsMacro(block);
+        }
+
+        private int depth(Block block)
+        {
+            return block.getParameter(DATA_NUMBERING_PARAMETER).split("\\.").length;
+        }
+
+        private boolean isInANumberedParagraphsMacro(Block block)
+        {
+            // Check if the bock is contained in a paragraphs numbering macro.
+            // Check if the paragraphs numbering macro is not outside of the scope of the table of paragraphs macro.
+            for (Block parent : collectParents(block)) {
+                if (this.macroMarkerBlockMatcher.match(parent)) {
+                    return true;
+                }
+                if (parent == this.xdom) {
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        private List<Block> collectParents(Block block)
+        {
+            List<Block> parents = new ArrayList<>();
+            Block parent = block.getParent();
+            do {
+                if (parent != null) {
+                    parents.add(parent);
+                    parent = parent.getParent();
+                }
+            } while (parent != null);
+            return parents;
+        }
+    }
+
     /**
      * Default constructor. Create and initialize the macro descriptor.
      */
@@ -75,6 +145,18 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
                 String.format("The depth parameter must be a positive integer but is [%d].", depth));
         }
 
-        return singletonList(new GroupBlock(emptyList()));
+        Block xdom;
+        if (parameters.getScope() == PAGE) {
+            xdom = context.getXDOM();
+        } else {
+            xdom = context.getCurrentMacroBlock().getParent();
+        }
+
+        List<ListItemBlock> blocks =
+            xdom.getBlocks(new NumberedParagraphsMatcher(xdom, parameters.getDepth()), DESCENDANT)
+                .stream().map(ListItemBlock.class::cast)
+                .collect(Collectors.toList());
+
+        return Collections.singletonList(this.paragraphsTreeService.buildTableOfParagraphs(blocks));
     }
 }

@@ -1,24 +1,45 @@
 .runTransformations
 .#-----------------------------------------------------
 .input|xwiki/2.1
-.# Test the macro on a simple case with the default parameters.
+.# Test the toc macro on a simple case with the default parameters.
 .#-----------------------------------------------------
+{{paragraphs-toc/}}
+
 {{paragraphs-numbering}}
-1. 1
+1. A B C D
 {{/paragraphs-numbering}}
 .#-----------------------------------------------------
 .expect|xhtml/1.0
 .#-----------------------------------------------------
-<div style="--numbering-prefix: '';" id="generated-id" class="numbered-lists"><style>
+<ul><li><div><span class="wikilink"><a href="#P1">1</a></span>&nbsp;A B C D</div></li></ul><div style="--numbering-prefix: '';" id="generated-id" class="numbered-lists"><style>
 #generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
   counter-reset: numbering 0;
 }
-</style><div class="numbered-lists-view"><ol><li id="P1" data-numbering="2">1</li></ol></div><div class="numbered-lists-edit"><ol><li id="P3" data-numbering="3">1</li></ol></div></div>
+</style><div class="numbered-lists-view"><ol><li id="P1" data-numbering="1">A B C D</li></ol></div><div class="numbered-lists-edit"><ol><li>A B C D</li></ol></div></div>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
 beginDocument
-beginMacroMarkerStandalone [paragraphs-numbering] [] [1. 1]
+beginMacroMarkerStandalone [paragraphs-toc] []
+beginList [BULLETED]
+beginListItem
+beginGroup
+beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [P1]]] [false]
+onRawText [1] [xhtml/1.0]
+endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [P1]]] [false]
+onSpace
+onWord [A]
+onSpace
+onWord [B]
+onSpace
+onWord [C]
+onSpace
+onWord [D]
+endGroup
+endListItem
+endList [BULLETED]
+endMacroMarkerStandalone [paragraphs-toc] []
+beginMacroMarkerStandalone [paragraphs-numbering] [] [1. A B C D]
 beginGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '';]]
 onRawText [<style>
 #generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
@@ -27,20 +48,32 @@ onRawText [<style>
 </style>] [xhtml/1.0]
 beginGroup [[class]=[numbered-lists-view]]
 beginList [NUMBERED]
-beginListItem [[data-numbering]=[2][id]=[P1]]
-onWord [1]
-endListItem [[data-numbering]=[2][id]=[P1]]
+beginListItem [[data-numbering]=[1][id]=[P1]]
+onWord [A]
+onSpace
+onWord [B]
+onSpace
+onWord [C]
+onSpace
+onWord [D]
+endListItem [[data-numbering]=[1][id]=[P1]]
 endList [NUMBERED]
 endGroup [[class]=[numbered-lists-view]]
 beginGroup [[class]=[numbered-lists-edit]]
 beginMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
 beginList [NUMBERED]
-beginListItem [[data-numbering]=[3][id]=[P3]]
-onWord [1]
-endListItem [[data-numbering]=[3][id]=[P3]]
+beginListItem
+onWord [A]
+onSpace
+onWord [B]
+onSpace
+onWord [C]
+onSpace
+onWord [D]
+endListItem
 endList [NUMBERED]
 endMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
 endGroup [[class]=[numbered-lists-edit]]
 endGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '';]]
-endMacroMarkerStandalone [paragraphs-numbering] [] [1. 1]
+endMacroMarkerStandalone [paragraphs-numbering] [] [1. A B C D]
 endDocument

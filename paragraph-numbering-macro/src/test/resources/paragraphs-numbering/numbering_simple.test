@@ -3,44 +3,44 @@
 .input|xwiki/2.1
 .# Test the macro on a simple case with the default parameters.
 .#-----------------------------------------------------
-{{paragraphs-numbering start="1.3.5"}}
+{{paragraphs-numbering}}
 1. 1
 {{/paragraphs-numbering}}
 .#-----------------------------------------------------
 .expect|xhtml/1.0
 .#-----------------------------------------------------
-<div style="--numbering-prefix: '1.3.';" id="generated-id" class="numbered-lists"><style>
+<div style="--numbering-prefix: '';" id="generated-id" class="numbered-lists"><style>
 #generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
-  counter-reset: numbering 4;
+  counter-reset: numbering 0;
 }
-</style><div class="numbered-lists-view"><ol><li id="P1.3.5" data-numbering="1.3.6">1</li></ol></div><div class="numbered-lists-edit"><ol><li id="P1.3.7" data-numbering="1.3.7">1</li></ol></div></div>
+</style><div class="numbered-lists-view"><ol><li id="P1" data-numbering="1">1</li></ol></div><div class="numbered-lists-edit"><ol><li>1</li></ol></div></div>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
 beginDocument
-beginMacroMarkerStandalone [paragraphs-numbering] [start=1.3.5] [1. 1]
-beginGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '1.3.';]]
+beginMacroMarkerStandalone [paragraphs-numbering] [] [1. 1]
+beginGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '';]]
 onRawText [<style>
 #generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
-  counter-reset: numbering 4;
+  counter-reset: numbering 0;
 }
 </style>] [xhtml/1.0]
 beginGroup [[class]=[numbered-lists-view]]
 beginList [NUMBERED]
-beginListItem [[data-numbering]=[1.3.6][id]=[P1.3.5]]
+beginListItem [[data-numbering]=[1][id]=[P1]]
 onWord [1]
-endListItem [[data-numbering]=[1.3.6][id]=[P1.3.5]]
+endListItem [[data-numbering]=[1][id]=[P1]]
 endList [NUMBERED]
 endGroup [[class]=[numbered-lists-view]]
 beginGroup [[class]=[numbered-lists-edit]]
 beginMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
 beginList [NUMBERED]
-beginListItem [[data-numbering]=[1.3.7][id]=[P1.3.7]]
+beginListItem
 onWord [1]
-endListItem [[data-numbering]=[1.3.7][id]=[P1.3.7]]
+endListItem
 endList [NUMBERED]
 endMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
 endGroup [[class]=[numbered-lists-edit]]
-endGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '1.3.';]]
-endMacroMarkerStandalone [paragraphs-numbering] [start=1.3.5] [1. 1]
+endGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '';]]
+endMacroMarkerStandalone [paragraphs-numbering] [] [1. 1]
 endDocument

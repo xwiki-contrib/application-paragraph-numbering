@@ -1,0 +1,177 @@
+.runTransformations:macro
+.#-----------------------------------------------------
+.input|xwiki/2.1
+.# Test the macro on a simple case with the default parameters.
+.#-----------------------------------------------------
+{{paragraphs-toc/}}
+
+{{paragraphs-numbering tableOfParagraphs="true"}}
+1. A B C D
+{{/paragraphs-numbering}}
+
+{{paragraphs-numbering tableOfParagraphs="true"}}
+1. A B C D
+{{/paragraphs-numbering}}
+.#-----------------------------------------------------
+.expect|xhtml/1.0
+.#-----------------------------------------------------
+<ul><li><div><span class="wikilink"><a href="#P1">1</a></span>&nbsp;A B C D</div></li><li><div><span class="wikilink"><a href="#P2">2</a></span>&nbsp;A B C D</div></li></ul><ul><li><div><span class="wikilink"><a href="#P1">1</a></span>&nbsp;A B C D</div></li></ul><div style="--numbering-prefix: '';" id="generated-id" class="numbered-lists"><style>
+#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
+  counter-reset: numbering 0;
+}
+</style><div class="numbered-lists-view"><ol><li id="P1" data-numbering="1">A B C D</li></ol></div><div class="numbered-lists-edit"><ol><li>A B C D</li></ol></div></div><ul><li><div><span class="wikilink"><a href="#P2">2</a></span>&nbsp;A B C D</div></li></ul><div style="--numbering-prefix: '';" id="generated-id" class="numbered-lists"><style>
+#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
+  counter-reset: numbering 1;
+}
+</style><div class="numbered-lists-view"><ol><li id="P2" data-numbering="2">A B C D</li></ol></div><div class="numbered-lists-edit"><ol><li>A B C D</li></ol></div></div>
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+beginMacroMarkerStandalone [paragraphs-toc] []
+beginList [BULLETED]
+beginListItem
+beginGroup
+beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [P1]]] [false]
+onRawText [1] [xhtml/1.0]
+endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [P1]]] [false]
+onSpace
+onWord [A]
+onSpace
+onWord [B]
+onSpace
+onWord [C]
+onSpace
+onWord [D]
+endGroup
+endListItem
+beginListItem
+beginGroup
+beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [P2]]] [false]
+onRawText [2] [xhtml/1.0]
+endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [P2]]] [false]
+onSpace
+onWord [A]
+onSpace
+onWord [B]
+onSpace
+onWord [C]
+onSpace
+onWord [D]
+endGroup
+endListItem
+endList [BULLETED]
+endMacroMarkerStandalone [paragraphs-toc] []
+beginMacroMarkerStandalone [paragraphs-numbering] [tableOfParagraphs=true] [1. A B C D]
+beginMacroMarkerStandalone [paragraphs-toc] [scope=LOCAL]
+beginList [BULLETED]
+beginListItem
+beginGroup
+beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [P1]]] [false]
+onRawText [1] [xhtml/1.0]
+endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [P1]]] [false]
+onSpace
+onWord [A]
+onSpace
+onWord [B]
+onSpace
+onWord [C]
+onSpace
+onWord [D]
+endGroup
+endListItem
+endList [BULLETED]
+endMacroMarkerStandalone [paragraphs-toc] [scope=LOCAL]
+beginGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '';]]
+onRawText [<style>
+#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
+  counter-reset: numbering 0;
+}
+</style>] [xhtml/1.0]
+beginGroup [[class]=[numbered-lists-view]]
+beginList [NUMBERED]
+beginListItem [[data-numbering]=[1][id]=[P1]]
+onWord [A]
+onSpace
+onWord [B]
+onSpace
+onWord [C]
+onSpace
+onWord [D]
+endListItem [[data-numbering]=[1][id]=[P1]]
+endList [NUMBERED]
+endGroup [[class]=[numbered-lists-view]]
+beginGroup [[class]=[numbered-lists-edit]]
+beginMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
+beginList [NUMBERED]
+beginListItem
+onWord [A]
+onSpace
+onWord [B]
+onSpace
+onWord [C]
+onSpace
+onWord [D]
+endListItem
+endList [NUMBERED]
+endMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
+endGroup [[class]=[numbered-lists-edit]]
+endGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '';]]
+endMacroMarkerStandalone [paragraphs-numbering] [tableOfParagraphs=true] [1. A B C D]
+beginMacroMarkerStandalone [paragraphs-numbering] [tableOfParagraphs=true] [1. A B C D]
+beginMacroMarkerStandalone [paragraphs-toc] [scope=LOCAL]
+beginList [BULLETED]
+beginListItem
+beginGroup
+beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [P2]]] [false]
+onRawText [2] [xhtml/1.0]
+endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [P2]]] [false]
+onSpace
+onWord [A]
+onSpace
+onWord [B]
+onSpace
+onWord [C]
+onSpace
+onWord [D]
+endGroup
+endListItem
+endList [BULLETED]
+endMacroMarkerStandalone [paragraphs-toc] [scope=LOCAL]
+beginGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '';]]
+onRawText [<style>
+#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
+  counter-reset: numbering 1;
+}
+</style>] [xhtml/1.0]
+beginGroup [[class]=[numbered-lists-view]]
+beginList [NUMBERED]
+beginListItem [[data-numbering]=[2][id]=[P2]]
+onWord [A]
+onSpace
+onWord [B]
+onSpace
+onWord [C]
+onSpace
+onWord [D]
+endListItem [[data-numbering]=[2][id]=[P2]]
+endList [NUMBERED]
+endGroup [[class]=[numbered-lists-view]]
+beginGroup [[class]=[numbered-lists-edit]]
+beginMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
+beginList [NUMBERED]
+beginListItem
+onWord [A]
+onSpace
+onWord [B]
+onSpace
+onWord [C]
+onSpace
+onWord [D]
+endListItem
+endList [NUMBERED]
+endMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
+endGroup [[class]=[numbered-lists-edit]]
+endGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '';]]
+endMacroMarkerStandalone [paragraphs-numbering] [tableOfParagraphs=true] [1. A B C D]
+endDocument

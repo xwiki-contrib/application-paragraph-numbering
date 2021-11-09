@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.paragraph.numbering.internal;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,7 @@ import org.xwiki.contrib.paragraph.numbering.ParagraphsNumberingMacroParameters;
 import org.xwiki.contrib.paragraph.numbering.internal.util.MacroIdGenerator;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.GroupBlock;
+import org.xwiki.rendering.block.MacroBlock;
 import org.xwiki.rendering.block.MetaDataBlock;
 import org.xwiki.rendering.block.RawBlock;
 import org.xwiki.rendering.block.XDOM;
@@ -54,6 +56,9 @@ import static java.util.Arrays.asList;
 import static java.util.Arrays.copyOf;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
+import static org.xwiki.contrib.paragraph.numbering.TableOfParagraphsMacroParameters.SCOPE_PARAMETER;
+import static org.xwiki.contrib.paragraph.numbering.TableOfParagraphsMacroParameters.Scope.LOCAL;
+import static org.xwiki.contrib.paragraph.numbering.internal.TableOfParagraphsMacro.PARAGRAPHS_TOC_MACRO;
 import static org.xwiki.rendering.block.Block.LIST_BLOCK_TYPE;
 import static org.xwiki.text.StringUtils.isEmpty;
 
@@ -98,7 +103,7 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
     @Inject
     @Named("paragraphs-ids")
     private Transformation paragraphsIdsTransformation;
-    
+
     @Inject
     private Execution execution;
 
@@ -132,11 +137,16 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
         XDOM parse = this.contentParser.parse(content, context, false, context.isInline());
 
         try {
-            return singletonList(new GroupBlock(asList(
+            ArrayList<Block> blocks = new ArrayList<>();
+            if (parameters.isTableOfParagraphs()) {
+                blocks.add(new MacroBlock(PARAGRAPHS_TOC_MACRO, singletonMap(SCOPE_PARAMETER, LOCAL.name()), false));
+            }
+            blocks.add(new GroupBlock(asList(
                 getDynamicCssBlock(offset, macroId),
                 getViewBlock(parse, context.getTransformationContext()),
                 getEditBlock(parse.getChildren())
             ), rootBlockParameters(macroId, prefix)));
+            return blocks;
         } catch (TransformationException e) {
             throw new MacroExecutionException("Failed to transform the macro content", e);
         }

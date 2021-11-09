@@ -1,4 +1,4 @@
-.runTransformations
+.runTransformations:macro
 .#-----------------------------------------------------
 .input|xwiki/2.1
 .# Test the toc macro on a simple case with the default parameters.

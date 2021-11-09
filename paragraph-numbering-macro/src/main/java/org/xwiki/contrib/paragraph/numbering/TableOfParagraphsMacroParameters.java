@@ -30,6 +30,11 @@ import org.xwiki.contrib.paragraph.numbering.internal.TableOfParagraphsMacro;
 public class TableOfParagraphsMacroParameters
 {
     /**
+     * Name of the scope parameter.
+     */
+    public static final String SCOPE_PARAMETER = "scope";
+    
+    /**
      * The available scope options.
      */
     public enum Scope

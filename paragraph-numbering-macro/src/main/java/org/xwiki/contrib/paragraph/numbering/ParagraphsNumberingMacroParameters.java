@@ -36,6 +36,8 @@ public class ParagraphsNumberingMacroParameters
      */
     private String start;
 
+    private boolean tableOfParagraphs;
+
     /**
      * @return the number of the paragraphs sequence
      */
@@ -53,5 +55,26 @@ public class ParagraphsNumberingMacroParameters
     public void setStart(String start)
     {
         this.start = start;
+    }
+
+    /**
+     * @return {@code true} if a table of paragraphs needs to be displayed at the beginning of the paragraphs sequence
+     *     (default is {@code false})
+     */
+    public boolean isTableOfParagraphs()
+    {
+        return this.tableOfParagraphs;
+    }
+
+    /**
+     * Define if a table of paragraphs need to be displayed.
+     *
+     * @param tableOfParagraphs {@code true} if a table of paragraphs needs to be displayed at the beginning of the
+     *     paragraphs sequence, {@code false} otherwise (default is {@code false})
+     */
+    @PropertyDescription("Display a table of paragraphs.")
+    public void setTableOfParagraphs(boolean tableOfParagraphs)
+    {
+        this.tableOfParagraphs = tableOfParagraphs;
     }
 }

@@ -51,15 +51,15 @@ public class IntegrationTests implements RenderingTests
         MacroIdGenerator macroIdGenerator = componentManager.registerMockComponent(MacroIdGenerator.class);
         when(macroIdGenerator.generateId(anyString())).thenReturn("generated-id");
 
-        // Spy on the rendering configuration to exclude `paragraphs-ids` from the configuration, to prevent it to be 
-        // called twice, once during the macro execution and once when the transformations are called.
-        RenderingConfiguration renderingConfiguration = componentManager.getInstance(RenderingConfiguration.class);
-        RenderingConfiguration spy = Mockito.spy(renderingConfiguration);
-        componentManager.registerComponent(RenderingConfiguration.class, spy);
-        final List<String> transformationNames = spy.getTransformationNames();
-        when(spy.getTransformationNames()).thenAnswer(invocationOnMock -> {
-            transformationNames.remove("paragraphs-ids");
-            return transformationNames;
-        });
+//        // Spy on the rendering configuration to exclude `paragraphs-ids` from the configuration, to prevent it to be 
+//        // called twice, once during the macro execution and once when the transformations are called.
+//        RenderingConfiguration renderingConfiguration = componentManager.getInstance(RenderingConfiguration.class);
+//        RenderingConfiguration spy = Mockito.spy(renderingConfiguration);
+//        componentManager.registerComponent(RenderingConfiguration.class, spy);
+//        final List<String> transformationNames = spy.getTransformationNames();
+//        when(spy.getTransformationNames()).thenAnswer(invocationOnMock -> {
+//            transformationNames.remove("paragraphs-ids");
+//            return transformationNames;
+//        });
     }
 }

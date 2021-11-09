@@ -51,10 +51,15 @@ import static org.xwiki.rendering.block.Block.Axes.DESCENDANT;
  * @since 1.0
  */
 @Component
-@Named("paragraphs-toc")
+@Named(TableOfParagraphsMacro.PARAGRAPHS_TOC_MACRO)
 @Singleton
 public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacroParameters>
 {
+    /**
+     * Hint of the table of paragraphs macro.
+     */
+    public static final String PARAGRAPHS_TOC_MACRO = "paragraphs-toc";
+
     @Inject
     private ParagraphsTreeService paragraphsTreeService;
 

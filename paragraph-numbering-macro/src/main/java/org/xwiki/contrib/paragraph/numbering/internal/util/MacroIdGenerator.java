@@ -19,7 +19,11 @@
  */
 package org.xwiki.contrib.paragraph.numbering.internal.util;
 
-import org.xwiki.component.annotation.Role;
+import java.util.UUID;
+
+import javax.inject.Singleton;
+
+import org.xwiki.component.annotation.Component;
 
 /**
  * Generate unique ids for the macros.
@@ -27,17 +31,24 @@ import org.xwiki.component.annotation.Role;
  * @version $Id$
  * @since 1.0
  */
-@Role
-public interface MacroIdGenerator
+@Component(roles = MacroIdGenerator.class)
+@Singleton
+public class MacroIdGenerator
 {
     /**
      * @return a unique id without prefix
      */
-    String generateId();
+    public String generateId()
+    {
+        return generateId("");
+    }
 
     /**
      * @param prefix the prefix to add to the id
      * @return a unique id with a prefix
      */
-    String generateId(String prefix);
+    public String generateId(String prefix)
+    {
+        return String.format("%s%s", prefix, UUID.randomUUID());
+    }
 }

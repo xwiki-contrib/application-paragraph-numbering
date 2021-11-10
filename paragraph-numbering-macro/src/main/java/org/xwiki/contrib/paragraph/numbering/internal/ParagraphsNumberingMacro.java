@@ -32,9 +32,10 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.velocity.tools.generic.EscapeTool;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.context.Execution;
 import org.xwiki.contrib.paragraph.numbering.ParagraphsNumberingMacroParameters;
+import org.xwiki.contrib.paragraph.numbering.internal.util.ExecutionContextService;
 import org.xwiki.contrib.paragraph.numbering.internal.util.MacroIdGenerator;
+import org.xwiki.contrib.paragraph.numbering.internal.util.ParagraphIndexesService;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.GroupBlock;
 import org.xwiki.rendering.block.MacroBlock;
@@ -52,7 +53,6 @@ import org.xwiki.rendering.transformation.TransformationContext;
 import org.xwiki.rendering.transformation.TransformationException;
 import org.xwiki.skinx.SkinExtension;
 
-import static java.util.Arrays.asList;
 import static java.util.Arrays.copyOf;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
@@ -60,7 +60,6 @@ import static org.xwiki.contrib.paragraph.numbering.TableOfParagraphsMacroParame
 import static org.xwiki.contrib.paragraph.numbering.TableOfParagraphsMacroParameters.Scope.LOCAL;
 import static org.xwiki.contrib.paragraph.numbering.internal.TableOfParagraphsMacro.PARAGRAPHS_TOC_MACRO;
 import static org.xwiki.rendering.block.Block.LIST_BLOCK_TYPE;
-import static org.xwiki.text.StringUtils.isEmpty;
 
 /**
  * Automatically add numbers on the paragraphs contained in the body of the macro.
@@ -105,7 +104,10 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
     private Transformation paragraphsIdsTransformation;
 
     @Inject
-    private Execution execution;
+    private ParagraphIndexesService paragraphIndexesService;
+
+    @Inject
+    private ExecutionContextService executionContextService;
 
     /**
      * Default constructor. Create and initialize the macro descriptor.
@@ -127,7 +129,8 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
     public List<Block> execute(ParagraphsNumberingMacroParameters parameters, String content,
         MacroTransformationContext context) throws MacroExecutionException
     {
-        int[] startIndexes = initializeStartIndexes(parameters, context);
+        int[] startIndexes =
+            this.paragraphIndexesService.initializeIndexes(parameters.getStart(), context.getTransformationContext());
         int offset = Math.max(0, startIndexes[startIndexes.length - 1] - 1);
         String macroId = this.macroIdGenerator.generateId("numbered-lists-");
         String prefix = computePrefix(startIndexes);
@@ -141,36 +144,19 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
             if (parameters.isTableOfParagraphs()) {
                 blocks.add(new MacroBlock(PARAGRAPHS_TOC_MACRO, singletonMap(SCOPE_PARAMETER, LOCAL.name()), false));
             }
-            blocks.add(new GroupBlock(asList(
-                getDynamicCssBlock(offset, macroId),
-                getViewBlock(parse, context.getTransformationContext()),
-                getEditBlock(parse.getChildren())
-            ), rootBlockParameters(macroId, prefix)));
+
+            List<Block> groupBlocks = new ArrayList<>();
+            groupBlocks.add(getDynamicCssBlock(offset, macroId));
+            groupBlocks.add(getViewBlock(parse, context.getTransformationContext()));
+            // Exclude the edit block when exporting since it cannot be hidden using css.
+            if (!this.executionContextService.isExporting()) {
+                groupBlocks.add(getEditBlock(parse.getChildren()));
+            }
+            blocks.add(new GroupBlock(groupBlocks, rootBlockParameters(macroId, prefix)));
             return blocks;
         } catch (TransformationException e) {
             throw new MacroExecutionException("Failed to transform the macro content", e);
         }
-    }
-
-    private int[] initializeStartIndexes(ParagraphsNumberingMacroParameters parameters,
-        MacroTransformationContext context) throws MacroExecutionException
-    {
-        int[] startIndexes;
-        String key =
-            String.format("%d.%s", System.identityHashCode(context.getTransformationContext()), CONTEXT_INDEXES);
-        if (parameters.getStart() != null) {
-            startIndexes = parseStartParameter(parameters.getStart());
-
-            this.execution.getContext().setProperty(key, startIndexes);
-        } else {
-            if (this.execution.getContext().getProperty(key) == null) {
-                this.execution.getContext().setProperty(key, new int[] { 1 });
-                startIndexes = new int[] { 1 };
-            } else {
-                startIndexes = (int[]) this.execution.getContext().getProperty(key);
-            }
-        }
-        return startIndexes;
     }
 
     private GroupBlock getEditBlock(List<Block> contentBlock)
@@ -235,34 +221,5 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
             prefix = "";
         }
         return prefix;
-    }
-
-    private int[] parseStartParameter(String start) throws MacroExecutionException
-    {
-        if (isEmpty(start)) {
-            throw invalidStartParameterFormat(start);
-        }
-        String[] segments = start.split("\\.");
-        int[] numbers = new int[segments.length];
-
-        try {
-            for (int i = 0; i < segments.length; i++) {
-                numbers[i] = Integer.parseInt(segments[i]);
-
-                if (numbers[i] < 0) {
-                    throw new NumberFormatException();
-                }
-            }
-        } catch (NumberFormatException e) {
-            throw invalidStartParameterFormat(start);
-        }
-        return numbers;
-    }
-
-    private MacroExecutionException invalidStartParameterFormat(String start)
-    {
-        // TODO: i18n
-        return new MacroExecutionException(
-            String.format("Invalid start format [%s]. A list of integers separated with dots is expected", start));
     }
 }

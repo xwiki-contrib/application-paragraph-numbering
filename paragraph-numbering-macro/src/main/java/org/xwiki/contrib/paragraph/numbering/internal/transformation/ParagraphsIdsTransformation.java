@@ -26,15 +26,13 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
-import org.xwiki.context.Execution;
 import org.xwiki.contrib.paragraph.numbering.internal.ParagraphsNumberingMacro;
+import org.xwiki.contrib.paragraph.numbering.internal.util.ParagraphIndexesService;
 import org.xwiki.contrib.paragraph.numbering.internal.util.ParagraphsTreeService;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.ListItemBlock;
 import org.xwiki.rendering.transformation.AbstractTransformation;
 import org.xwiki.rendering.transformation.TransformationContext;
-
-import static org.xwiki.contrib.paragraph.numbering.internal.ParagraphsNumberingMacro.CONTEXT_INDEXES;
 
 /**
  * Define IDs to the paragraphs inside the {@link ParagraphsNumberingMacro}.
@@ -54,7 +52,7 @@ public class ParagraphsIdsTransformation extends AbstractTransformation
     public static final String DATA_NUMBERING_PARAMETER = "data-numbering";
 
     @Inject
-    private Execution execution;
+    private ParagraphIndexesService paragraphIndexesService;
 
     @Inject
     private ParagraphsTreeService paragraphsTreeService;
@@ -63,7 +61,7 @@ public class ParagraphsIdsTransformation extends AbstractTransformation
     public void transform(Block rootBlock, TransformationContext context)
     {
         List<ListItemBlock> blocks = rootBlock.getBlocks(ListItemBlock.class::isInstance, Block.Axes.DESCENDANT);
-        String key = String.format("%d.%s", System.identityHashCode(context), CONTEXT_INDEXES);
-        this.paragraphsTreeService.annotateWithIndexes(blocks, (int[]) this.execution.getContext().getProperty(key));
+        int[] indices = this.paragraphIndexesService.getIndices(context);
+        this.paragraphsTreeService.annotateWithIndexes(blocks, indices);
     }
 }

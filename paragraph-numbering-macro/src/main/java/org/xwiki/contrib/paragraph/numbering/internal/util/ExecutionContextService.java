@@ -19,35 +19,37 @@
  */
 package org.xwiki.contrib.paragraph.numbering.internal.util;
 
-import java.util.UUID;
+import java.util.Objects;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
+import org.xwiki.context.Execution;
+
+import com.xpn.xwiki.XWikiContext;
+
+import static com.xpn.xwiki.XWikiContext.EXECUTIONCONTEXT_KEY;
 
 /**
- * Generate unique ids for the macros.
+ * Provide operations related to the execution context.
  *
  * @version $Id$
  * @since 1.0
  */
-@Component
+@Component(roles = ExecutionContextService.class)
 @Singleton
-public class DefaultMacroIdGenerator implements MacroIdGenerator
+public class ExecutionContextService
 {
-    /**
-     * {@inheritDoc}
-     */
-    public String generateId()
-    {
-        return generateId("");
-    }
+    @Inject
+    private Execution execution;
 
     /**
-     * {@inheritDoc}
+     * @return {@code true} if the current action is {@code export}, {@code false} otherwise
      */
-    public String generateId(String prefix)
+    public boolean isExporting()
     {
-        return String.format("%s%s", prefix, UUID.randomUUID());
+        XWikiContext xWikiContext = (XWikiContext) this.execution.getContext().getProperty(EXECUTIONCONTEXT_KEY);
+        return Objects.equals(xWikiContext.getAction(), "export");
     }
 }

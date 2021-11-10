@@ -19,7 +19,7 @@ package org.xwiki.contrib.paragraph.numbering.internal;/*
  */
 
 import org.junit.jupiter.api.Test;
-import org.xwiki.contrib.paragraph.numbering.internal.util.DefaultMacroIdGenerator;
+import org.xwiki.contrib.paragraph.numbering.internal.util.MacroIdGenerator;
 import org.xwiki.test.junit5.mockito.ComponentTest;
 import org.xwiki.test.junit5.mockito.InjectMockComponents;
 
@@ -27,22 +27,21 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Test of {@link DefaultMacroIdGenerator}.
+ * Test of {@link MacroIdGenerator}.
  *
  * @version $Id$
  * @since 1.0
  */
 @ComponentTest
-class DefaultMacroIdGeneratorTest
+class MacroIdGeneratorTest
 {
     @InjectMockComponents
-    private DefaultMacroIdGenerator generator;
+    private MacroIdGenerator generator;
 
     @Test
     void generateId()
     {
-        String s = this.generator.generateId();
-        assertNotNull(s);
+        assertNotNull(this.generator.generateId());
     }
 
     @Test

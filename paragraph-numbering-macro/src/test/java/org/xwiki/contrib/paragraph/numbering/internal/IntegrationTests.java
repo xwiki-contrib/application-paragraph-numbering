@@ -19,11 +19,8 @@
  */
 package org.xwiki.contrib.paragraph.numbering.internal;
 
-import java.util.List;
-
-import org.mockito.Mockito;
+import org.xwiki.contrib.paragraph.numbering.internal.util.ExecutionContextService;
 import org.xwiki.contrib.paragraph.numbering.internal.util.MacroIdGenerator;
-import org.xwiki.rendering.configuration.RenderingConfiguration;
 import org.xwiki.rendering.test.integration.TestDataParser;
 import org.xwiki.rendering.test.integration.junit5.RenderingTests;
 import org.xwiki.skinx.SkinExtension;
@@ -51,15 +48,8 @@ public class IntegrationTests implements RenderingTests
         MacroIdGenerator macroIdGenerator = componentManager.registerMockComponent(MacroIdGenerator.class);
         when(macroIdGenerator.generateId(anyString())).thenReturn("generated-id");
 
-//        // Spy on the rendering configuration to exclude `paragraphs-ids` from the configuration, to prevent it to be 
-//        // called twice, once during the macro execution and once when the transformations are called.
-//        RenderingConfiguration renderingConfiguration = componentManager.getInstance(RenderingConfiguration.class);
-//        RenderingConfiguration spy = Mockito.spy(renderingConfiguration);
-//        componentManager.registerComponent(RenderingConfiguration.class, spy);
-//        final List<String> transformationNames = spy.getTransformationNames();
-//        when(spy.getTransformationNames()).thenAnswer(invocationOnMock -> {
-//            transformationNames.remove("paragraphs-ids");
-//            return transformationNames;
-//        });
+        ExecutionContextService executionContextService =
+            componentManager.registerMockComponent(ExecutionContextService.class);
+        when(executionContextService.isExporting()).thenReturn(false);
     }
 }

@@ -22,7 +22,7 @@
 .#-----------------------------------------------------
 .expect|xhtml/1.0
 .#-----------------------------------------------------
-<ul><li><span class="wikilink"><a href="#HH1">H1</a></span></li><li><span class="wikilink"><a href="#HH2">H2</a></span></li></ul><ul><li><span class="wikilink"><a href="#HP1">1 P1</a></span></li><li><span class="wikilink"><a href="#HP2">1 P2</a></span></li></ul><div class="paragraphs-numbering-root"><ul><li><span class="wikilink"><a href="#HP1">1&nbsp;P1</a></span></li></ul><h1 id="HP1" class="wikigeneratedid wikigeneratedheader"><span>P1</span></h1></div><h1 id="HH1" class="wikigeneratedid"><span>H1</span></h1><div class="paragraphs-numbering-root"><ul><li><span class="wikilink"><a href="#HP2">1&nbsp;P2</a></span></li></ul><h1 id="HP2" class="wikigeneratedid wikigeneratedheader"><span>P2</span></h1></div><h1 id="HH2" class="wikigeneratedid"><span>H2</span></h1>
+<ul><li><span class="wikilink"><a href="#HH1">H1</a></span></li><li><span class="wikilink"><a href="#HH2">H2</a></span></li></ul><ul><li><span class="wikilink"><a href="#HP1">1 P1</a></span></li><li><span class="wikilink"><a href="#HP2">1 P2</a></span></li></ul><div class="paragraphs-numbering-root numbered-content-root"><ul><li><span class="wikilink"><a href="#HP1">1&nbsp;P1</a></span></li></ul><h1 id="HP1" class="wikigeneratedid wikigeneratedheader"><span>P1</span></h1></div><h1 id="HH1" class="wikigeneratedid"><span>H1</span></h1><div class="paragraphs-numbering-root numbered-content-root"><ul><li><span class="wikilink"><a href="#HP2">1&nbsp;P2</a></span></li></ul><h1 id="HP2" class="wikigeneratedid wikigeneratedheader"><span>P2</span></h1></div><h1 id="HH2" class="wikigeneratedid"><span>H2</span></h1>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
@@ -60,7 +60,7 @@ endListItem
 endList [BULLETED]
 endMacroMarkerStandalone [top] []
 beginMacroMarkerStandalone [paragraphs-numbering] [tableOfParagraphs=true] [= P1 =]
-beginGroup [[class]=[paragraphs-numbering-root]]
+beginGroup [[class]=[paragraphs-numbering-root numbered-content-root]]
 beginMacroMarkerStandalone [top] [scope=LOCAL]
 beginList [BULLETED]
 beginListItem
@@ -79,14 +79,14 @@ onWord [P1]
 endHeader [1, HP1]
 endSection
 endMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
-endGroup [[class]=[paragraphs-numbering-root]]
+endGroup [[class]=[paragraphs-numbering-root numbered-content-root]]
 endMacroMarkerStandalone [paragraphs-numbering] [tableOfParagraphs=true] [= P1 =]
 beginSection
 beginHeader [1, HH1]
 onWord [H1]
 endHeader [1, HH1]
 beginMacroMarkerStandalone [paragraphs-numbering] [tableOfParagraphs=true] [= P2 =]
-beginGroup [[class]=[paragraphs-numbering-root]]
+beginGroup [[class]=[paragraphs-numbering-root numbered-content-root]]
 beginMacroMarkerStandalone [top] [scope=LOCAL]
 beginList [BULLETED]
 beginListItem
@@ -105,7 +105,7 @@ onWord [P2]
 endHeader [1, HP2]
 endSection
 endMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
-endGroup [[class]=[paragraphs-numbering-root]]
+endGroup [[class]=[paragraphs-numbering-root numbered-content-root]]
 endMacroMarkerStandalone [paragraphs-numbering] [tableOfParagraphs=true] [= P2 =]
 endSection
 beginSection

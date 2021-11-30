@@ -74,10 +74,6 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
     @Named("ssrx")
     private SkinExtension ssrx;
 
-    @Inject
-    @Named("ssx")
-    private SkinExtension ssx;
-
     /**
      * The component used to import javascript file extensions.
      */
@@ -109,8 +105,6 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
         MacroTransformationContext context) throws MacroExecutionException
     {
         this.ssrx.use("paragraphsnumbering.css");
-        this.ssx.use("NumberedHeadings.Code.NumberedHeadings", singletonMap("rootSelectors",
-            ".paragraphs-numbering-root, .paragraphs-numbering-root > .xwiki-metadata-container"));
         // TODO: add an explicit (optional?) dependency to CKEditor in the runtime dependencies.
         this.jsrx.use("paragraphsnumbering.js");
 
@@ -125,6 +119,7 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
         if (!this.executionContextService.isExporting()) {
             blocks.add(new MetaDataBlock(parse.getChildren(), getNonGeneratedContentMetaData()));
         }
-        return singletonList(new GroupBlock(blocks, singletonMap(CLASS_PARAMETER, "paragraphs-numbering-root")));
+        return singletonList(
+            new GroupBlock(blocks, singletonMap(CLASS_PARAMETER, "paragraphs-numbering-root numbered-content-root")));
     }
 }

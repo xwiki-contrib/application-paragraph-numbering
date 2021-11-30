@@ -16,14 +16,14 @@ Some content.
 .#-----------------------------------------------------
 .expect|xhtml/1.0
 .#-----------------------------------------------------
-<div class="paragraphs-numbering-root"><h1 id="H1" class="wikigeneratedid wikigeneratedheader"><span>1</span></h1><h2 id="H2" class="wikigeneratedid wikigeneratedheader"><span>2</span></h2></div><p>Some content.</p><div class="paragraphs-numbering-root"><h1 id="H3" class="wikigeneratedid wikigeneratedheader"><span>3</span></h1></div>
+<div class="paragraphs-numbering-root numbered-content-root"><h1 id="H1" class="wikigeneratedid wikigeneratedheader"><span>1</span></h1><h2 id="H2" class="wikigeneratedid wikigeneratedheader"><span>2</span></h2></div><p>Some content.</p><div class="paragraphs-numbering-root numbered-content-root"><h1 id="H3" class="wikigeneratedid wikigeneratedheader"><span>3</span></h1></div>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
 beginDocument
 beginMacroMarkerStandalone [paragraphs-numbering] [] [= 1 =
 == 2 ==]
-beginGroup [[class]=[paragraphs-numbering-root]]
+beginGroup [[class]=[paragraphs-numbering-root numbered-content-root]]
 beginMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
 beginSection
 beginHeader [1, H1]
@@ -36,7 +36,7 @@ endHeader [2, H2]
 endSection
 endSection
 endMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
-endGroup [[class]=[paragraphs-numbering-root]]
+endGroup [[class]=[paragraphs-numbering-root numbered-content-root]]
 endMacroMarkerStandalone [paragraphs-numbering] [] [= 1 =
 == 2 ==]
 beginParagraph
@@ -46,7 +46,7 @@ onWord [content]
 onSpecialSymbol [.]
 endParagraph
 beginMacroMarkerStandalone [paragraphs-numbering] [] [= 3 =]
-beginGroup [[class]=[paragraphs-numbering-root]]
+beginGroup [[class]=[paragraphs-numbering-root numbered-content-root]]
 beginMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
 beginSection
 beginHeader [1, H3]
@@ -54,6 +54,6 @@ onWord [3]
 endHeader [1, H3]
 endSection
 endMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
-endGroup [[class]=[paragraphs-numbering-root]]
+endGroup [[class]=[paragraphs-numbering-root numbered-content-root]]
 endMacroMarkerStandalone [paragraphs-numbering] [] [= 3 =]
 endDocument

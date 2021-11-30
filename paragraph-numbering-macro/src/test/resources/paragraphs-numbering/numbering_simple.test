@@ -9,13 +9,13 @@
 .#-----------------------------------------------------
 .expect|xhtml/1.0
 .#-----------------------------------------------------
-<div class="paragraphs-numbering-root"><h1 id="H1" class="wikigeneratedid wikigeneratedheader"><span>1</span></h1></div>
+<div class="paragraphs-numbering-root numbered-content-root"><h1 id="H1" class="wikigeneratedid wikigeneratedheader"><span>1</span></h1></div>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
 beginDocument
 beginMacroMarkerStandalone [paragraphs-numbering] [] [= 1 =]
-beginGroup [[class]=[paragraphs-numbering-root]]
+beginGroup [[class]=[paragraphs-numbering-root numbered-content-root]]
 beginMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
 beginSection
 beginHeader [1, H1]
@@ -23,6 +23,6 @@ onWord [1]
 endHeader [1, H1]
 endSection
 endMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
-endGroup [[class]=[paragraphs-numbering-root]]
+endGroup [[class]=[paragraphs-numbering-root numbered-content-root]]
 endMacroMarkerStandalone [paragraphs-numbering] [] [= 1 =]
 endDocument

@@ -20,7 +20,6 @@
 package org.xwiki.contrib.paragraph.numbering.internal;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,20 +28,27 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
+import org.xwiki.component.phase.Initializable;
+import org.xwiki.component.phase.InitializationException;
+import org.xwiki.contrib.numbered.content.toc.internal.TocTreeBuilder;
 import org.xwiki.contrib.paragraph.numbering.TableOfParagraphsMacroParameters;
-import org.xwiki.contrib.paragraph.numbering.internal.util.ParagraphsTreeService;
 import org.xwiki.rendering.block.Block;
-import org.xwiki.rendering.block.ListItemBlock;
-import org.xwiki.rendering.block.match.BlockMatcher;
+import org.xwiki.rendering.block.BulletedListBlock;
+import org.xwiki.rendering.block.HeaderBlock;
+import org.xwiki.rendering.block.match.ClassBlockMatcher;
 import org.xwiki.rendering.block.match.MacroMarkerBlockMatcher;
+import org.xwiki.rendering.internal.macro.toc.TocBlockFilter;
+import org.xwiki.rendering.internal.macro.toc.TreeParameters;
+import org.xwiki.rendering.internal.macro.toc.TreeParametersBuilder;
 import org.xwiki.rendering.macro.AbstractMacro;
 import org.xwiki.rendering.macro.MacroExecutionException;
+import org.xwiki.rendering.macro.toc.TocMacroParameters;
+import org.xwiki.rendering.parser.Parser;
+import org.xwiki.rendering.renderer.reference.link.LinkLabelGenerator;
 import org.xwiki.rendering.transformation.MacroTransformationContext;
 
+import static java.util.Collections.singletonList;
 import static org.xwiki.contrib.paragraph.numbering.TableOfParagraphsMacroParameters.Scope.PAGE;
-import static org.xwiki.contrib.paragraph.numbering.internal.ParagraphsNumberingMacro.PARAGRAPHS_NUMBERING_MACRO;
-import static org.xwiki.contrib.paragraph.numbering.internal.transformation.ParagraphsIdsTransformation.DATA_NUMBERING_PARAMETER;
-import static org.xwiki.rendering.block.Block.Axes.DESCENDANT;
 
 /**
  * Display a Table of Paragraphs.
@@ -53,73 +59,29 @@ import static org.xwiki.rendering.block.Block.Axes.DESCENDANT;
 @Component
 @Named(TableOfParagraphsMacro.PARAGRAPHS_TOC_MACRO)
 @Singleton
-public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacroParameters>
+public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacroParameters> implements Initializable
 {
     /**
      * Hint of the table of paragraphs macro.
      */
-    public static final String PARAGRAPHS_TOC_MACRO = "paragraphs-toc";
+    public static final String PARAGRAPHS_TOC_MACRO = "top";
 
+    private final ClassBlockMatcher classBlockMatcher = new ClassBlockMatcher(HeaderBlock.class);
+
+    private TocTreeBuilder tocTreeBuilder;
+
+    /**
+     * A parser that knows how to parse plain text; this is used to transform link labels into plain text.
+     */
     @Inject
-    private ParagraphsTreeService paragraphsTreeService;
+    @Named("plain/1.0")
+    private Parser plainTextParser;
 
-    private static class NumberedParagraphsMatcher implements BlockMatcher
-    {
-        private final MacroMarkerBlockMatcher macroMarkerBlockMatcher =
-            new MacroMarkerBlockMatcher(PARAGRAPHS_NUMBERING_MACRO);
-
-        private final Block xdom;
-
-        private final int depth;
-
-        NumberedParagraphsMatcher(Block xdom, int depth)
-        {
-            this.xdom = xdom;
-            this.depth = depth;
-        }
-
-        @Override
-        public boolean match(Block block)
-        {
-            return block instanceof ListItemBlock
-                && block.getParameters().containsKey(DATA_NUMBERING_PARAMETER)
-                && depth(block) <= this.depth
-                && isInANumberedParagraphsMacro(block);
-        }
-
-        private int depth(Block block)
-        {
-            return block.getParameter(DATA_NUMBERING_PARAMETER).split("\\.").length;
-        }
-
-        private boolean isInANumberedParagraphsMacro(Block block)
-        {
-            // Check if the bock is contained in a paragraphs numbering macro.
-            // Check if the paragraphs numbering macro is not outside of the scope of the table of paragraphs macro.
-            for (Block parent : collectParents(block)) {
-                if (this.macroMarkerBlockMatcher.match(parent)) {
-                    return true;
-                }
-                if (parent == this.xdom) {
-                    return false;
-                }
-            }
-            return false;
-        }
-
-        private List<Block> collectParents(Block block)
-        {
-            List<Block> parents = new ArrayList<>();
-            Block parent = block.getParent();
-            do {
-                if (parent != null) {
-                    parents.add(parent);
-                    parent = parent.getParent();
-                }
-            } while (parent != null);
-            return parents;
-        }
-    }
+    /**
+     * Generate link label.
+     */
+    @Inject
+    private LinkLabelGenerator linkLabelGenerator;
 
     /**
      * Default constructor. Create and initialize the macro descriptor.
@@ -132,6 +94,13 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
         // paragraphs which need to be taken into account by the TOP macro.
         setPriority(2000);
         setDefaultCategory(DEFAULT_CATEGORY_NAVIGATION);
+    }
+
+    @Override
+    public void initialize() throws InitializationException
+    {
+        super.initialize();
+        this.tocTreeBuilder = new TocTreeBuilder(new TocBlockFilter(this.plainTextParser, this.linkLabelGenerator));
     }
 
     @Override
@@ -157,11 +126,31 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
             xdom = context.getCurrentMacroBlock().getParent();
         }
 
-        List<ListItemBlock> blocks =
-            xdom.getBlocks(new NumberedParagraphsMatcher(xdom, parameters.getDepth()), DESCENDANT)
-                .stream().map(ListItemBlock.class::cast)
-                .collect(Collectors.toList());
+        List<Block> treeBlocks;
+        if (parameters.getScope() == PAGE) {
+            treeBlocks =
+                xdom.getBlocks(new MacroMarkerBlockMatcher("paragraphs-numbering"), Block.Axes.DESCENDANT_OR_SELF);
+        } else {
+            treeBlocks = singletonList(context.getCurrentMacroBlock().getParent());
+        }
 
-        return Collections.singletonList(this.paragraphsTreeService.buildTableOfParagraphs(blocks));
+        // Generate the ToP for each paragraph blocks and merge them in a single ToP.
+        List<Block> items = new ArrayList<>();
+        for (Block macro : treeBlocks) {
+            TreeParametersBuilder builder = new TreeParametersBuilder();
+            TocMacroParameters macroParameters = new TocMacroParameters();
+            macroParameters.setNumbered(false);
+            macroParameters.setDepth(depth);
+            TreeParameters treeParameters = builder.build(macro, macroParameters, context);
+            List<Block> build = this.tocTreeBuilder.build(treeParameters, true,
+                () -> macro.getBlocks(this.classBlockMatcher, Block.Axes.DESCENDANT).stream()
+                    .map(HeaderBlock.class::cast)
+                    .collect(Collectors.toList()));
+            if (!build.isEmpty()) {
+                items.addAll(build.get(0).getChildren());
+            }
+        }
+
+        return singletonList(new BulletedListBlock(items));
     }
 }

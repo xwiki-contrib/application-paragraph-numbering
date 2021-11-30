@@ -3,175 +3,114 @@
 .input|xwiki/2.1
 .# Test the macro on a simple case with the default parameters.
 .#-----------------------------------------------------
-{{paragraphs-toc/}}
+{{toc/}}
+
+{{top/}}
 
 {{paragraphs-numbering tableOfParagraphs="true"}}
-1. A B C D
+= P1 =
 {{/paragraphs-numbering}}
 
+= H1 =
+
 {{paragraphs-numbering tableOfParagraphs="true"}}
-1. A B C D
+= P2 =
 {{/paragraphs-numbering}}
+
+= H2 =
+
 .#-----------------------------------------------------
 .expect|xhtml/1.0
 .#-----------------------------------------------------
-<ul><li><div><span class="wikilink"><a href="#P1">1</a></span>&nbsp;A B C D</div></li><li><div><span class="wikilink"><a href="#P2">2</a></span>&nbsp;A B C D</div></li></ul><ul><li><div><span class="wikilink"><a href="#P1">1</a></span>&nbsp;A B C D</div></li></ul><div style="--numbering-prefix: '';" id="generated-id" class="numbered-lists"><style>
-#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
-  counter-reset: numbering 0;
-}
-</style><div class="numbered-lists-view"><ol><li id="P1" data-numbering="1">A B C D</li></ol></div><div class="numbered-lists-edit"><ol><li>A B C D</li></ol></div></div><ul><li><div><span class="wikilink"><a href="#P2">2</a></span>&nbsp;A B C D</div></li></ul><div style="--numbering-prefix: '';" id="generated-id" class="numbered-lists"><style>
-#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
-  counter-reset: numbering 1;
-}
-</style><div class="numbered-lists-view"><ol><li id="P2" data-numbering="2">A B C D</li></ol></div><div class="numbered-lists-edit"><ol><li>A B C D</li></ol></div></div>
+<ul><li><span class="wikilink"><a href="#HH1">H1</a></span></li><li><span class="wikilink"><a href="#HH2">H2</a></span></li></ul><ul><li><span class="wikilink"><a href="#HP1">1 P1</a></span></li><li><span class="wikilink"><a href="#HP2">1 P2</a></span></li></ul><div class="paragraphs-numbering-root"><ul><li><span class="wikilink"><a href="#HP1">1&nbsp;P1</a></span></li></ul><h1 id="HP1" class="wikigeneratedid wikigeneratedheader"><span>P1</span></h1></div><h1 id="HH1" class="wikigeneratedid"><span>H1</span></h1><div class="paragraphs-numbering-root"><ul><li><span class="wikilink"><a href="#HP2">1&nbsp;P2</a></span></li></ul><h1 id="HP2" class="wikigeneratedid wikigeneratedheader"><span>P2</span></h1></div><h1 id="HH2" class="wikigeneratedid"><span>H2</span></h1>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
 beginDocument
-beginMacroMarkerStandalone [paragraphs-toc] []
+beginMacroMarkerStandalone [toc] []
 beginList [BULLETED]
 beginListItem
-beginGroup
-beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [P1]]] [false]
+beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HH1]]] [false]
+onWord [H1]
+endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HH1]]] [false]
+endListItem
+beginListItem
+beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HH2]]] [false]
+onWord [H2]
+endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HH2]]] [false]
+endListItem
+endList [BULLETED]
+endMacroMarkerStandalone [toc] []
+beginMacroMarkerStandalone [top] []
+beginList [BULLETED]
+beginListItem
+beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP1]]] [false]
 onRawText [1] [xhtml/1.0]
-endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [P1]]] [false]
 onSpace
-onWord [A]
-onSpace
-onWord [B]
-onSpace
-onWord [C]
-onSpace
-onWord [D]
-endGroup
+onWord [P1]
+endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP1]]] [false]
 endListItem
 beginListItem
-beginGroup
-beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [P2]]] [false]
-onRawText [2] [xhtml/1.0]
-endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [P2]]] [false]
-onSpace
-onWord [A]
-onSpace
-onWord [B]
-onSpace
-onWord [C]
-onSpace
-onWord [D]
-endGroup
-endListItem
-endList [BULLETED]
-endMacroMarkerStandalone [paragraphs-toc] []
-beginMacroMarkerStandalone [paragraphs-numbering] [tableOfParagraphs=true] [1. A B C D]
-beginMacroMarkerStandalone [paragraphs-toc] [scope=LOCAL]
-beginList [BULLETED]
-beginListItem
-beginGroup
-beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [P1]]] [false]
+beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP2]]] [false]
 onRawText [1] [xhtml/1.0]
-endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [P1]]] [false]
 onSpace
-onWord [A]
-onSpace
-onWord [B]
-onSpace
-onWord [C]
-onSpace
-onWord [D]
-endGroup
+onWord [P2]
+endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP2]]] [false]
 endListItem
 endList [BULLETED]
-endMacroMarkerStandalone [paragraphs-toc] [scope=LOCAL]
-beginGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '';]]
-onRawText [<style>
-#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
-  counter-reset: numbering 0;
-}
-</style>] [xhtml/1.0]
-beginGroup [[class]=[numbered-lists-view]]
-beginList [NUMBERED]
-beginListItem [[data-numbering]=[1][id]=[P1]]
-onWord [A]
-onSpace
-onWord [B]
-onSpace
-onWord [C]
-onSpace
-onWord [D]
-endListItem [[data-numbering]=[1][id]=[P1]]
-endList [NUMBERED]
-endGroup [[class]=[numbered-lists-view]]
-beginGroup [[class]=[numbered-lists-edit]]
-beginMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
-beginList [NUMBERED]
-beginListItem
-onWord [A]
-onSpace
-onWord [B]
-onSpace
-onWord [C]
-onSpace
-onWord [D]
-endListItem
-endList [NUMBERED]
-endMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
-endGroup [[class]=[numbered-lists-edit]]
-endGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '';]]
-endMacroMarkerStandalone [paragraphs-numbering] [tableOfParagraphs=true] [1. A B C D]
-beginMacroMarkerStandalone [paragraphs-numbering] [tableOfParagraphs=true] [1. A B C D]
-beginMacroMarkerStandalone [paragraphs-toc] [scope=LOCAL]
+endMacroMarkerStandalone [top] []
+beginMacroMarkerStandalone [paragraphs-numbering] [tableOfParagraphs=true] [= P1 =]
+beginGroup [[class]=[paragraphs-numbering-root]]
+beginMacroMarkerStandalone [top] [scope=LOCAL]
 beginList [BULLETED]
 beginListItem
-beginGroup
-beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [P2]]] [false]
-onRawText [2] [xhtml/1.0]
-endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [P2]]] [false]
+beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP1]]] [false]
+onRawText [1] [xhtml/1.0]
 onSpace
-onWord [A]
-onSpace
-onWord [B]
-onSpace
-onWord [C]
-onSpace
-onWord [D]
-endGroup
+onWord [P1]
+endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP1]]] [false]
 endListItem
 endList [BULLETED]
-endMacroMarkerStandalone [paragraphs-toc] [scope=LOCAL]
-beginGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '';]]
-onRawText [<style>
-#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
-  counter-reset: numbering 1;
-}
-</style>] [xhtml/1.0]
-beginGroup [[class]=[numbered-lists-view]]
-beginList [NUMBERED]
-beginListItem [[data-numbering]=[2][id]=[P2]]
-onWord [A]
-onSpace
-onWord [B]
-onSpace
-onWord [C]
-onSpace
-onWord [D]
-endListItem [[data-numbering]=[2][id]=[P2]]
-endList [NUMBERED]
-endGroup [[class]=[numbered-lists-view]]
-beginGroup [[class]=[numbered-lists-edit]]
+endMacroMarkerStandalone [top] [scope=LOCAL]
 beginMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
-beginList [NUMBERED]
-beginListItem
-onWord [A]
-onSpace
-onWord [B]
-onSpace
-onWord [C]
-onSpace
-onWord [D]
-endListItem
-endList [NUMBERED]
+beginSection
+beginHeader [1, HP1]
+onWord [P1]
+endHeader [1, HP1]
+endSection
 endMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
-endGroup [[class]=[numbered-lists-edit]]
-endGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '';]]
-endMacroMarkerStandalone [paragraphs-numbering] [tableOfParagraphs=true] [1. A B C D]
+endGroup [[class]=[paragraphs-numbering-root]]
+endMacroMarkerStandalone [paragraphs-numbering] [tableOfParagraphs=true] [= P1 =]
+beginSection
+beginHeader [1, HH1]
+onWord [H1]
+endHeader [1, HH1]
+beginMacroMarkerStandalone [paragraphs-numbering] [tableOfParagraphs=true] [= P2 =]
+beginGroup [[class]=[paragraphs-numbering-root]]
+beginMacroMarkerStandalone [top] [scope=LOCAL]
+beginList [BULLETED]
+beginListItem
+beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP2]]] [false]
+onRawText [1] [xhtml/1.0]
+onSpace
+onWord [P2]
+endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP2]]] [false]
+endListItem
+endList [BULLETED]
+endMacroMarkerStandalone [top] [scope=LOCAL]
+beginMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
+beginSection
+beginHeader [1, HP2]
+onWord [P2]
+endHeader [1, HP2]
+endSection
+endMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
+endGroup [[class]=[paragraphs-numbering-root]]
+endMacroMarkerStandalone [paragraphs-numbering] [tableOfParagraphs=true] [= P2 =]
+endSection
+beginSection
+beginHeader [1, HH2]
+onWord [H2]
+endHeader [1, HH2]
+endSection
 endDocument

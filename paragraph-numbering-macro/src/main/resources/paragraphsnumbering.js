@@ -1,4 +1,4 @@
-package org.xwiki.contrib.paragraph.numbering.internal;/*
+/*
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
  *
@@ -17,37 +17,8 @@ package org.xwiki.contrib.paragraph.numbering.internal;/*
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
-import org.junit.jupiter.api.Test;
-import org.xwiki.contrib.paragraph.numbering.internal.util.MacroIdGenerator;
-import org.xwiki.test.junit5.mockito.ComponentTest;
-import org.xwiki.test.junit5.mockito.InjectMockComponents;
-
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
-/**
- * Test of {@link MacroIdGenerator}.
- *
- * @version $Id$
- * @since 1.0
- */
-@ComponentTest
-class MacroIdGeneratorTest
-{
-    @InjectMockComponents
-    private MacroIdGenerator generator;
-
-    @Test
-    void generateId()
-    {
-        assertNotNull(this.generator.generateId());
-    }
-
-    @Test
-    void generateIdWithPrefix()
-    {
-        String prefix = this.generator.generateId("prefix-");
-        assertTrue(prefix.startsWith("prefix-"));
-    }
-}
+require(['deferred!ckeditor'], function (ckeditorPromise) {
+  ckeditorPromise.done(ckeditor => {
+    
+  })
+});

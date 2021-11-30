@@ -30,32 +30,7 @@ import org.xwiki.properties.annotation.PropertyDescription;
  */
 public class ParagraphsNumberingMacroParameters
 {
-    /**
-     * The starting number of the paragraphs sequence. By default, the counter is initialized to the value where the
-     * previous paragraphs numbering macro stopped.
-     */
-    private String start;
-
     private boolean tableOfParagraphs;
-
-    /**
-     * @return the number of the paragraphs sequence
-     */
-    public String getStart()
-    {
-        return this.start;
-    }
-
-    /**
-     * The number of the paragraphs sequence.
-     *
-     * @param start the starting number of the paragraphs sequence (for instance, {@code 2.1})
-     */
-    @PropertyDescription("The starting number of the paragraphs sequence.")
-    public void setStart(String start)
-    {
-        this.start = start;
-    }
 
     /**
      * @return {@code true} if a table of paragraphs needs to be displayed at the beginning of the paragraphs sequence

@@ -20,14 +20,12 @@
 package org.xwiki.contrib.paragraph.numbering.internal;
 
 import org.xwiki.contrib.paragraph.numbering.internal.util.ExecutionContextService;
-import org.xwiki.contrib.paragraph.numbering.internal.util.MacroIdGenerator;
 import org.xwiki.rendering.test.integration.TestDataParser;
 import org.xwiki.rendering.test.integration.junit5.RenderingTests;
 import org.xwiki.skinx.SkinExtension;
 import org.xwiki.test.annotation.AllComponents;
 import org.xwiki.test.mockito.MockitoComponentManager;
 
-import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.when;
 
 /**
@@ -44,9 +42,8 @@ public class IntegrationTests implements RenderingTests
     public void initialize(MockitoComponentManager componentManager) throws Exception
     {
         componentManager.registerMockComponent(SkinExtension.class, "ssrx");
-
-        MacroIdGenerator macroIdGenerator = componentManager.registerMockComponent(MacroIdGenerator.class);
-        when(macroIdGenerator.generateId(anyString())).thenReturn("generated-id");
+        componentManager.registerMockComponent(SkinExtension.class, "ssx");
+        componentManager.registerMockComponent(SkinExtension.class, "jsrx");
 
         ExecutionContextService executionContextService =
             componentManager.registerMockComponent(ExecutionContextService.class);

@@ -3,44 +3,54 @@
 .input|xwiki/2.1
 .# Test the macro with the start value set to a specific value.
 .#-----------------------------------------------------
-{{paragraphs-numbering start="1.3.5"}}
-1. 1
+{{paragraphs-numbering}}
+= t1 =
+(% start="3" %)
+== t1.3 ==
+(% start="5" %)
+=== t1.3.5 ===
 {{/paragraphs-numbering}}
 .#-----------------------------------------------------
 .expect|xhtml/1.0
 .#-----------------------------------------------------
-<div style="--numbering-prefix: '1.3.';" id="generated-id" class="numbered-lists"><style>
-#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
-  counter-reset: numbering 4;
-}
-</style><div class="numbered-lists-view"><ol><li id="P1.3.5" data-numbering="1.3.5">1</li></ol></div><div class="numbered-lists-edit"><ol><li>1</li></ol></div></div>
+<div class="paragraphs-numbering-root"><h1 id="Ht1" class="wikigeneratedid wikigeneratedheader"><span>t1</span></h1><h2 id="Ht1.3" class="wikigeneratedid wikigeneratedheader" start="3"><span>t1.3</span></h2><h3 id="Ht1.3.5" class="wikigeneratedid wikigeneratedheader" start="5"><span>t1.3.5</span></h3></div>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
 beginDocument
-beginMacroMarkerStandalone [paragraphs-numbering] [start=1.3.5] [1. 1]
-beginGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '1.3.';]]
-onRawText [<style>
-#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
-  counter-reset: numbering 4;
-}
-</style>] [xhtml/1.0]
-beginGroup [[class]=[numbered-lists-view]]
-beginList [NUMBERED]
-beginListItem [[data-numbering]=[1.3.5][id]=[P1.3.5]]
-onWord [1]
-endListItem [[data-numbering]=[1.3.5][id]=[P1.3.5]]
-endList [NUMBERED]
-endGroup [[class]=[numbered-lists-view]]
-beginGroup [[class]=[numbered-lists-edit]]
+beginMacroMarkerStandalone [paragraphs-numbering] [] [= t1 =
+(% start="3" %)
+== t1.3 ==
+(% start="5" %)
+=== t1.3.5 ===]
+beginGroup [[class]=[paragraphs-numbering-root]]
 beginMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
-beginList [NUMBERED]
-beginListItem
-onWord [1]
-endListItem
-endList [NUMBERED]
+beginSection
+beginHeader [1, Ht1]
+onWord [t1]
+endHeader [1, Ht1]
+beginSection
+beginHeader [2, Ht1.3] [[start]=[3]]
+onWord [t1]
+onSpecialSymbol [.]
+onWord [3]
+endHeader [2, Ht1.3] [[start]=[3]]
+beginSection
+beginHeader [3, Ht1.3.5] [[start]=[5]]
+onWord [t1]
+onSpecialSymbol [.]
+onWord [3]
+onSpecialSymbol [.]
+onWord [5]
+endHeader [3, Ht1.3.5] [[start]=[5]]
+endSection
+endSection
+endSection
 endMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
-endGroup [[class]=[numbered-lists-edit]]
-endGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '1.3.';]]
-endMacroMarkerStandalone [paragraphs-numbering] [start=1.3.5] [1. 1]
+endGroup [[class]=[paragraphs-numbering-root]]
+endMacroMarkerStandalone [paragraphs-numbering] [] [= t1 =
+(% start="3" %)
+== t1.3 ==
+(% start="5" %)
+=== t1.3.5 ===]
 endDocument

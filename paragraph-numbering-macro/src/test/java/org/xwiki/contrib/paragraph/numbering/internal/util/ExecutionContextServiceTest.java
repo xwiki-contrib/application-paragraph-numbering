@@ -38,7 +38,7 @@ import static org.mockito.Mockito.when;
  * Test of {@link ExecutionContextService}.
  *
  * @version $Id$
- * @since X.Y.X
+ * @since 1.0
  */
 @ComponentTest
 class ExecutionContextServiceTest

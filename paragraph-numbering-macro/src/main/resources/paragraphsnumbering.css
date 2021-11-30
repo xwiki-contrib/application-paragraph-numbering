@@ -1,0 +1,35 @@
+/** TODO: vertical spacings. **/
+.paragraphs-numbering-root > h1,
+.paragraphs-numbering-root > h2,
+.paragraphs-numbering-root > h3,
+.paragraphs-numbering-root > h4,
+.paragraphs-numbering-root > h5,
+.paragraphs-numbering-root > h6,
+.paragraphs-numbering-root > * > h1,
+.paragraphs-numbering-root > * > h2,
+.paragraphs-numbering-root > * > h3,
+.paragraphs-numbering-root > * > h4,
+.paragraphs-numbering-root > * > h5,
+.paragraphs-numbering-root > * > h6 {
+  font-size: 14px; /* TODO: replace with a variable @font-size-base*/
+}
+
+.paragraphs-numbering-root {
+  margin-left: 100px;
+}
+
+.paragraphs-numbering-root > h1::before,
+.paragraphs-numbering-root > h2::before,
+.paragraphs-numbering-root > h3::before,
+.paragraphs-numbering-root > h4::before,
+.paragraphs-numbering-root > h5::before,
+.paragraphs-numbering-root > h6::before,
+.paragraphs-numbering-root > * > h1::before,
+.paragraphs-numbering-root > * > h2::before,
+.paragraphs-numbering-root > * > h3::before,
+.paragraphs-numbering-root > * > h4::before,
+.paragraphs-numbering-root > * > h5::before,
+.paragraphs-numbering-root > * > h6::before {
+  position: absolute;
+  margin-left: -100px;
+}

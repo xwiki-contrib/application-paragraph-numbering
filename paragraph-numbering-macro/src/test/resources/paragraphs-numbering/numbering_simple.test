@@ -4,43 +4,25 @@
 .# Test the macro on a simple case with the default parameters.
 .#-----------------------------------------------------
 {{paragraphs-numbering}}
-1. 1
+= 1 =
 {{/paragraphs-numbering}}
 .#-----------------------------------------------------
 .expect|xhtml/1.0
 .#-----------------------------------------------------
-<div style="--numbering-prefix: '';" id="generated-id" class="numbered-lists"><style>
-#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
-  counter-reset: numbering 0;
-}
-</style><div class="numbered-lists-view"><ol><li id="P1" data-numbering="1">1</li></ol></div><div class="numbered-lists-edit"><ol><li>1</li></ol></div></div>
+<div class="paragraphs-numbering-root"><h1 id="H1" class="wikigeneratedid wikigeneratedheader"><span>1</span></h1></div>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
 beginDocument
-beginMacroMarkerStandalone [paragraphs-numbering] [] [1. 1]
-beginGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '';]]
-onRawText [<style>
-#generated-id > .numbered-lists-edit > .xwiki-metadata-container > ol:not(.skip-numbering):first-of-type {
-  counter-reset: numbering 0;
-}
-</style>] [xhtml/1.0]
-beginGroup [[class]=[numbered-lists-view]]
-beginList [NUMBERED]
-beginListItem [[data-numbering]=[1][id]=[P1]]
-onWord [1]
-endListItem [[data-numbering]=[1][id]=[P1]]
-endList [NUMBERED]
-endGroup [[class]=[numbered-lists-view]]
-beginGroup [[class]=[numbered-lists-edit]]
+beginMacroMarkerStandalone [paragraphs-numbering] [] [= 1 =]
+beginGroup [[class]=[paragraphs-numbering-root]]
 beginMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
-beginList [NUMBERED]
-beginListItem
+beginSection
+beginHeader [1, H1]
 onWord [1]
-endListItem
-endList [NUMBERED]
+endHeader [1, H1]
+endSection
 endMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
-endGroup [[class]=[numbered-lists-edit]]
-endGroup [[class]=[numbered-lists][id]=[generated-id][style]=[--numbering-prefix: '';]]
-endMacroMarkerStandalone [paragraphs-numbering] [] [1. 1]
+endGroup [[class]=[paragraphs-numbering-root]]
+endMacroMarkerStandalone [paragraphs-numbering] [] [= 1 =]
 endDocument

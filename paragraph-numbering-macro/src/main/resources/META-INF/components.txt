@@ -1,7 +1,3 @@
 org.xwiki.contrib.paragraph.numbering.internal.ParagraphsNumberingMacro
 org.xwiki.contrib.paragraph.numbering.internal.TableOfParagraphsMacro
-org.xwiki.contrib.paragraph.numbering.internal.transformation.ParagraphsIdsTransformation
-org.xwiki.contrib.paragraph.numbering.internal.util.MacroIdGenerator
-org.xwiki.contrib.paragraph.numbering.internal.util.ParagraphsTreeService
-org.xwiki.contrib.paragraph.numbering.internal.util.ParagraphIndexesService
 org.xwiki.contrib.paragraph.numbering.internal.util.ExecutionContextService

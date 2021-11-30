@@ -31,6 +31,7 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.component.phase.Initializable;
 import org.xwiki.component.phase.InitializationException;
 import org.xwiki.contrib.numbered.content.toc.internal.TocTreeBuilder;
+import org.xwiki.contrib.numbered.headings.NumberingCacheManager;
 import org.xwiki.contrib.paragraph.numbering.TableOfParagraphsMacroParameters;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.BulletedListBlock;
@@ -83,6 +84,9 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
     @Inject
     private LinkLabelGenerator linkLabelGenerator;
 
+    @Inject
+    private NumberingCacheManager numberingCacheManager;
+
     /**
      * Default constructor. Create and initialize the macro descriptor.
      */
@@ -100,7 +104,8 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
     public void initialize() throws InitializationException
     {
         super.initialize();
-        this.tocTreeBuilder = new TocTreeBuilder(new TocBlockFilter(this.plainTextParser, this.linkLabelGenerator));
+        this.tocTreeBuilder = new TocTreeBuilder(new TocBlockFilter(this.plainTextParser, this.linkLabelGenerator),
+            this.numberingCacheManager);
     }
 
     @Override

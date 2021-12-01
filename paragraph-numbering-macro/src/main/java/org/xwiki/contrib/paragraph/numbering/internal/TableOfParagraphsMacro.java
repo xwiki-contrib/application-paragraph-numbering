@@ -21,7 +21,6 @@ package org.xwiki.contrib.paragraph.numbering.internal;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -30,12 +29,13 @@ import javax.inject.Singleton;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.phase.Initializable;
 import org.xwiki.component.phase.InitializationException;
-import org.xwiki.contrib.numbered.content.toc.internal.TocTreeBuilder;
+import org.xwiki.contrib.numbered.content.toc.TocTreeBuilder;
 import org.xwiki.contrib.numbered.headings.NumberingCacheManager;
 import org.xwiki.contrib.paragraph.numbering.TableOfParagraphsMacroParameters;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.BulletedListBlock;
 import org.xwiki.rendering.block.HeaderBlock;
+import org.xwiki.rendering.block.MetaDataBlock;
 import org.xwiki.rendering.block.match.ClassBlockMatcher;
 import org.xwiki.rendering.block.match.MacroMarkerBlockMatcher;
 import org.xwiki.rendering.internal.macro.toc.TocBlockFilter;
@@ -136,26 +136,34 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
             treeBlocks =
                 xdom.getBlocks(new MacroMarkerBlockMatcher("paragraphs-numbering"), Block.Axes.DESCENDANT_OR_SELF);
         } else {
-            treeBlocks = singletonList(context.getCurrentMacroBlock().getParent());
+            treeBlocks = singletonList(xdom.getParent());
         }
 
         // Generate the ToP for each paragraph blocks and merge them in a single ToP.
         List<Block> items = new ArrayList<>();
         for (Block macro : treeBlocks) {
+            Block root =
+                macro.getFirstBlock(new ClassBlockMatcher(MetaDataBlock.class), Block.Axes.DESCENDANT_OR_SELF);
             TreeParametersBuilder builder = new TreeParametersBuilder();
             TocMacroParameters macroParameters = new TocMacroParameters();
             macroParameters.setNumbered(false);
             macroParameters.setDepth(depth);
-            TreeParameters treeParameters = builder.build(macro, macroParameters, context);
-            List<Block> build = this.tocTreeBuilder.build(treeParameters, true,
-                () -> macro.getBlocks(this.classBlockMatcher, Block.Axes.DESCENDANT).stream()
-                    .map(HeaderBlock.class::cast)
-                    .collect(Collectors.toList()));
+            TreeParameters treeParameters = builder.build(root, macroParameters, context);
+            List<Block> build = this.tocTreeBuilder.build(treeParameters, true, () -> getHeaderBlocks(root));
             if (!build.isEmpty()) {
                 items.addAll(build.get(0).getChildren());
             }
         }
 
         return singletonList(new BulletedListBlock(items));
+    }
+
+    private List<HeaderBlock> getHeaderBlocks(Block macro)
+    {
+        List<HeaderBlock> list = new ArrayList<>();
+        for (Block block : macro.getBlocks(this.classBlockMatcher, Block.Axes.DESCENDANT)) {
+            list.add((HeaderBlock) block);
+        }
+        return list;
     }
 }

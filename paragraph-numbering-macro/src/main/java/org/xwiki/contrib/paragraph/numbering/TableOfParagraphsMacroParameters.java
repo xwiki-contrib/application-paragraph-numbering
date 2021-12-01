@@ -20,6 +20,7 @@
 package org.xwiki.contrib.paragraph.numbering;
 
 import org.xwiki.contrib.paragraph.numbering.internal.TableOfParagraphsMacro;
+import org.xwiki.stability.Unstable;
 
 /**
  * Parameters for the {@link TableOfParagraphsMacro} Macro.
@@ -27,6 +28,7 @@ import org.xwiki.contrib.paragraph.numbering.internal.TableOfParagraphsMacro;
  * @version $Id$
  * @since 1.0
  */
+@Unstable
 public class TableOfParagraphsMacroParameters
 {
     /**

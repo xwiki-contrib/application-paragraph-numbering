@@ -21,6 +21,7 @@ package org.xwiki.contrib.paragraph.numbering;
 
 import org.xwiki.contrib.paragraph.numbering.internal.ParagraphsNumberingMacro;
 import org.xwiki.properties.annotation.PropertyDescription;
+import org.xwiki.stability.Unstable;
 
 /**
  * Parameters for the {@link ParagraphsNumberingMacro} Macro.
@@ -28,6 +29,7 @@ import org.xwiki.properties.annotation.PropertyDescription;
  * @version $Id$
  * @since 1.0
  */
+@Unstable
 public class ParagraphsNumberingMacroParameters
 {
     private boolean tableOfParagraphs;

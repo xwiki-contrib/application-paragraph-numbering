@@ -27,6 +27,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.numbered.content.toc.TocTreeBuilder;
 import org.xwiki.contrib.paragraph.numbering.ParagraphsNumberingMacroParameters;
 import org.xwiki.contrib.paragraph.numbering.internal.util.ExecutionContextService;
 import org.xwiki.rendering.block.Block;
@@ -120,6 +121,7 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
             blocks.add(new MetaDataBlock(parse.getChildren(), getNonGeneratedContentMetaData()));
         }
         return singletonList(
-            new GroupBlock(blocks, singletonMap(CLASS_PARAMETER, "paragraphs-numbering-root numbered-content-root")));
+            new GroupBlock(blocks, singletonMap(CLASS_PARAMETER,
+                String.format("paragraphs-numbering-root %s", TocTreeBuilder.NUMBERED_CONTENT_ROOT_CLASS))));
     }
 }

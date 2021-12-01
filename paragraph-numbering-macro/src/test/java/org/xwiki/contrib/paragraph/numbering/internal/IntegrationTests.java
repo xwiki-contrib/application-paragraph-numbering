@@ -19,13 +19,25 @@
  */
 package org.xwiki.contrib.paragraph.numbering.internal;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+import org.xwiki.cache.Cache;
+import org.xwiki.cache.CacheManager;
+import org.xwiki.cache.event.CacheEntryListener;
 import org.xwiki.contrib.paragraph.numbering.internal.util.ExecutionContextService;
+import org.xwiki.rendering.block.HeaderBlock;
 import org.xwiki.rendering.test.integration.TestDataParser;
 import org.xwiki.rendering.test.integration.junit5.RenderingTests;
 import org.xwiki.skinx.SkinExtension;
 import org.xwiki.test.annotation.AllComponents;
 import org.xwiki.test.mockito.MockitoComponentManager;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -44,9 +56,19 @@ public class IntegrationTests implements RenderingTests
         componentManager.registerMockComponent(SkinExtension.class, "ssrx");
         componentManager.registerMockComponent(SkinExtension.class, "ssx");
         componentManager.registerMockComponent(SkinExtension.class, "jsrx");
+        CacheManager cacheManager = componentManager.registerMockComponent(CacheManager.class);
 
         ExecutionContextService executionContextService =
             componentManager.registerMockComponent(ExecutionContextService.class);
         when(executionContextService.isExporting()).thenReturn(false);
+
+        Cache<Map<HeaderBlock, String>> cache = mock(Cache.class);
+        Map<String, Map<HeaderBlock, String>> map = new HashMap<>();
+        doAnswer(invocation -> {
+            map.put(invocation.getArgument(0), invocation.getArgument(1));
+            return null;
+        }).when(cache).set(any(), any());
+        doAnswer(invocation -> map.get(invocation.getArgument(0))).when(cache).get(any());
+        when(cacheManager.<Map<HeaderBlock, String>>createNewCache(any())).thenReturn(cache);
     }
 }

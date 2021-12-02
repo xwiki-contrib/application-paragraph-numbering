@@ -1,3 +1,4 @@
 org.xwiki.contrib.paragraph.numbering.internal.ParagraphsNumberingMacro
 org.xwiki.contrib.paragraph.numbering.internal.TableOfParagraphsMacro
 org.xwiki.contrib.paragraph.numbering.internal.util.ExecutionContextService
+org.xwiki.contrib.paragraph.numbering.internal.ParagraphsNumberingService

@@ -30,11 +30,10 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.component.phase.Initializable;
 import org.xwiki.component.phase.InitializationException;
 import org.xwiki.contrib.numbered.content.toc.TocTreeBuilder;
-import org.xwiki.contrib.numbered.headings.NumberingCacheManager;
+import org.xwiki.contrib.numberedreferences.NumberingService;
 import org.xwiki.contrib.paragraph.numbering.TableOfParagraphsMacroParameters;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.BulletedListBlock;
-import org.xwiki.rendering.block.HeaderBlock;
 import org.xwiki.rendering.block.MetaDataBlock;
 import org.xwiki.rendering.block.match.ClassBlockMatcher;
 import org.xwiki.rendering.block.match.MacroMarkerBlockMatcher;
@@ -67,8 +66,6 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
      */
     public static final String PARAGRAPHS_TOC_MACRO = "top";
 
-    private final ClassBlockMatcher classBlockMatcher = new ClassBlockMatcher(HeaderBlock.class);
-
     private TocTreeBuilder tocTreeBuilder;
 
     /**
@@ -85,7 +82,8 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
     private LinkLabelGenerator linkLabelGenerator;
 
     @Inject
-    private NumberingCacheManager numberingCacheManager;
+    @Named("paragraphs")
+    private NumberingService numberingService;
 
     /**
      * Default constructor. Create and initialize the macro descriptor.
@@ -105,7 +103,7 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
     {
         super.initialize();
         this.tocTreeBuilder = new TocTreeBuilder(new TocBlockFilter(this.plainTextParser, this.linkLabelGenerator),
-            this.numberingCacheManager);
+            this.numberingService);
     }
 
     @Override
@@ -149,21 +147,12 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
             macroParameters.setNumbered(false);
             macroParameters.setDepth(depth);
             TreeParameters treeParameters = builder.build(root, macroParameters, context);
-            List<Block> build = this.tocTreeBuilder.build(treeParameters, true, () -> getHeaderBlocks(root));
+            List<Block> build = this.tocTreeBuilder.build(treeParameters, true);
             if (!build.isEmpty()) {
                 items.addAll(build.get(0).getChildren());
             }
         }
 
         return singletonList(new BulletedListBlock(items));
-    }
-
-    private List<HeaderBlock> getHeaderBlocks(Block macro)
-    {
-        List<HeaderBlock> list = new ArrayList<>();
-        for (Block block : macro.getBlocks(this.classBlockMatcher, Block.Axes.DESCENDANT)) {
-            list.add((HeaderBlock) block);
-        }
-        return list;
     }
 }

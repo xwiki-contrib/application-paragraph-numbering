@@ -22,13 +22,10 @@ package org.xwiki.contrib.paragraph.numbering.internal;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.xwiki.cache.Cache;
 import org.xwiki.cache.CacheManager;
-import org.xwiki.cache.event.CacheEntryListener;
+import org.xwiki.contrib.numberedreferences.internal.DefaultNumberingCacheManager;
 import org.xwiki.contrib.paragraph.numbering.internal.util.ExecutionContextService;
-import org.xwiki.rendering.block.HeaderBlock;
 import org.xwiki.rendering.test.integration.TestDataParser;
 import org.xwiki.rendering.test.integration.junit5.RenderingTests;
 import org.xwiki.skinx.SkinExtension;
@@ -48,6 +45,7 @@ import static org.mockito.Mockito.when;
  * @since 1.0
  */
 @AllComponents
+//@RenderingTests.Scope(value = "paragraphs-numbering/numbering_toc")
 public class IntegrationTests implements RenderingTests
 {
     @RenderingTests.Initialized
@@ -62,13 +60,13 @@ public class IntegrationTests implements RenderingTests
             componentManager.registerMockComponent(ExecutionContextService.class);
         when(executionContextService.isExporting()).thenReturn(false);
 
-        Cache<Map<HeaderBlock, String>> cache = mock(Cache.class);
-        Map<String, Map<HeaderBlock, String>> map = new HashMap<>();
+        Cache<DefaultNumberingCacheManager.CachedValue> cache = mock(Cache.class);
+        Map<String, DefaultNumberingCacheManager.CachedValue> map = new HashMap<>();
         doAnswer(invocation -> {
             map.put(invocation.getArgument(0), invocation.getArgument(1));
             return null;
         }).when(cache).set(any(), any());
         doAnswer(invocation -> map.get(invocation.getArgument(0))).when(cache).get(any());
-        when(cacheManager.<Map<HeaderBlock, String>>createNewCache(any())).thenReturn(cache);
+        when(cacheManager.<DefaultNumberingCacheManager.CachedValue>createNewCache(any())).thenReturn(cache);
     }
 }

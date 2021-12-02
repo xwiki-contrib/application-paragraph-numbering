@@ -18,7 +18,6 @@ package org.xwiki.contrib.paragraph.numbering.internal.util;/*
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.Mock;
@@ -31,7 +30,7 @@ import org.xwiki.test.junit5.mockito.MockComponent;
 import com.xpn.xwiki.XWikiContext;
 
 import static com.xpn.xwiki.XWikiContext.EXECUTIONCONTEXT_KEY;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 /**

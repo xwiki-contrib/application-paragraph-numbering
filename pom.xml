@@ -86,6 +86,7 @@
   </build>
   <modules>
     <module>paragraph-numbering-macro</module>
+    <module>paragraph-numbering-ui</module>
   </modules>
   <dependencies>
     <dependency>

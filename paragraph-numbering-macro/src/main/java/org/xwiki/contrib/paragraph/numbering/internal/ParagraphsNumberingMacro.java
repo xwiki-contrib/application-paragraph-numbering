@@ -27,7 +27,6 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.numbered.content.toc.TocTreeBuilder;
 import org.xwiki.contrib.paragraph.numbering.ParagraphsNumberingMacroParameters;
 import org.xwiki.contrib.paragraph.numbering.internal.util.ExecutionContextService;
 import org.xwiki.rendering.block.Block;
@@ -44,6 +43,7 @@ import org.xwiki.skinx.SkinExtension;
 
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
+import static org.xwiki.contrib.numberedreferences.NumberingService.NUMBERED_CONTENT_ROOT_CLASS;
 import static org.xwiki.rendering.block.Block.LIST_BLOCK_TYPE;
 import static org.xwiki.rendering.macro.toc.TocMacroParameters.Scope.LOCAL;
 
@@ -106,7 +106,6 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
         MacroTransformationContext context) throws MacroExecutionException
     {
         this.ssrx.use("paragraphsnumbering.css");
-        // TODO: add an explicit (optional?) dependency to CKEditor in the runtime dependencies.
         this.jsrx.use("paragraphsnumbering.js");
 
         List<Block> blocks = new ArrayList<>();
@@ -122,6 +121,6 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
         }
         return singletonList(
             new GroupBlock(blocks, singletonMap(CLASS_PARAMETER,
-                String.format("paragraphs-numbering-root %s", TocTreeBuilder.NUMBERED_CONTENT_ROOT_CLASS))));
+                String.format("paragraphs-numbering-root %s", NUMBERED_CONTENT_ROOT_CLASS))));
     }
 }

@@ -24,7 +24,7 @@ import java.util.Map;
 
 import org.xwiki.cache.Cache;
 import org.xwiki.cache.CacheManager;
-import org.xwiki.contrib.numberedreferences.internal.DefaultNumberingCacheManager;
+import org.xwiki.contrib.numberedreferences.internal.DefaultHeadersNumberingCacheManager;
 import org.xwiki.contrib.paragraph.numbering.internal.util.ExecutionContextService;
 import org.xwiki.rendering.test.integration.TestDataParser;
 import org.xwiki.rendering.test.integration.junit5.RenderingTests;
@@ -60,13 +60,13 @@ public class IntegrationTests implements RenderingTests
             componentManager.registerMockComponent(ExecutionContextService.class);
         when(executionContextService.isExporting()).thenReturn(false);
 
-        Cache<DefaultNumberingCacheManager.CachedValue> cache = mock(Cache.class);
-        Map<String, DefaultNumberingCacheManager.CachedValue> map = new HashMap<>();
+        Cache<DefaultHeadersNumberingCacheManager.CachedValue> cache = mock(Cache.class);
+        Map<String, DefaultHeadersNumberingCacheManager.CachedValue> map = new HashMap<>();
         doAnswer(invocation -> {
             map.put(invocation.getArgument(0), invocation.getArgument(1));
             return null;
         }).when(cache).set(any(), any());
         doAnswer(invocation -> map.get(invocation.getArgument(0))).when(cache).get(any());
-        when(cacheManager.<DefaultNumberingCacheManager.CachedValue>createNewCache(any())).thenReturn(cache);
+        when(cacheManager.<DefaultHeadersNumberingCacheManager.CachedValue>createNewCache(any())).thenReturn(cache);
     }
 }

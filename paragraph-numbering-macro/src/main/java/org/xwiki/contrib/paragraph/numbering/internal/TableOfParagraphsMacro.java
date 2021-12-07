@@ -30,7 +30,7 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.component.phase.Initializable;
 import org.xwiki.component.phase.InitializationException;
 import org.xwiki.contrib.numbered.content.toc.TocTreeBuilder;
-import org.xwiki.contrib.numberedreferences.NumberingService;
+import org.xwiki.contrib.numberedreferences.HeaderNumberingService;
 import org.xwiki.contrib.paragraph.numbering.TableOfParagraphsMacroParameters;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.BulletedListBlock;
@@ -83,7 +83,7 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
 
     @Inject
     @Named("paragraphs")
-    private NumberingService numberingService;
+    private HeaderNumberingService headerNumberingService;
 
     /**
      * Default constructor. Create and initialize the macro descriptor.
@@ -103,7 +103,7 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
     {
         super.initialize();
         this.tocTreeBuilder = new TocTreeBuilder(new TocBlockFilter(this.plainTextParser, this.linkLabelGenerator),
-            this.numberingService);
+            this.headerNumberingService);
     }
 
     @Override

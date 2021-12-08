@@ -26,7 +26,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.numbered.headings.AbstractHeadersNumberingService;
+import org.xwiki.contrib.numbered.content.headings.AbstractHeadersNumberingService;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.HeaderBlock;
 import org.xwiki.rendering.block.match.ClassBlockMatcher;

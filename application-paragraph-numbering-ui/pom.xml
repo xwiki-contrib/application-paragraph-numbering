@@ -29,7 +29,7 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
-  <artifactId>paragraph-numbering-ui</artifactId>
+  <artifactId>application-paragraph-numbering-ui</artifactId>
   <version>1.0-SNAPSHOT</version>
   <name>Paragraph Numbering - UI</name>
   <description>Provides the User Interface for Paragraphs Numbering</description>

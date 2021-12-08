@@ -51,7 +51,7 @@
     <dependency>
       <groupId>org.xwiki.contrib.numbered.content</groupId>
       <artifactId>application-numbered-headings-toc-macro</artifactId>
-      <version>${project.version}</version>
+      <version>${application.numbered.content.version}</version>
     </dependency>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
@@ -62,7 +62,7 @@
     <dependency>
       <groupId>org.xwiki.contrib.numbered.content</groupId>
       <artifactId>application-numbered-headings-ui</artifactId>
-      <version>${project.version}</version>
+      <version>${application.numbered.content.version}</version>
       <type>xar</type>
       <scope>runtime</scope>
     </dependency>

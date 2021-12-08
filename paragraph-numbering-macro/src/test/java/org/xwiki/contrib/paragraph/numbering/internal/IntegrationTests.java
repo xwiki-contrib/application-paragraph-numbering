@@ -24,7 +24,7 @@ import java.util.Map;
 
 import org.xwiki.cache.Cache;
 import org.xwiki.cache.CacheManager;
-import org.xwiki.contrib.numberedreferences.internal.DefaultHeadersNumberingCacheManager;
+import org.xwiki.contrib.numbered.headings.internal.DefaultHeadersNumberingCacheManager;
 import org.xwiki.contrib.paragraph.numbering.internal.util.ExecutionContextService;
 import org.xwiki.rendering.test.integration.TestDataParser;
 import org.xwiki.rendering.test.integration.junit5.RenderingTests;

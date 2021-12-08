@@ -48,8 +48,8 @@ public class ParagraphsNumberingService extends AbstractHeadersNumberingService
     public List<HeaderBlock> getHeaderBlocks(Block rootBlock)
     {
         List<HeaderBlock> list = new ArrayList<>();
-        for (Block block : rootBlock.getBlocks(this.classBlockMatcher, Block.Axes.DESCENDANT)) {
-            list.add((HeaderBlock) block);
+        for (HeaderBlock block : rootBlock.<HeaderBlock>getBlocks(this.classBlockMatcher, Block.Axes.DESCENDANT)) {
+            list.add(block);
         }
         return list;
     }

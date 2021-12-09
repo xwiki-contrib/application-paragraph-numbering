@@ -52,12 +52,12 @@
     <dependency>
       <groupId>org.xwiki.contrib.numbered.content</groupId>
       <artifactId>application-numbered-content-headings-api</artifactId>
-      <version>${project.version}</version>
+      <version>${application.numbered.content.version}</version>
     </dependency>
     <dependency>
       <groupId>org.xwiki.contrib.numbered.content</groupId>
       <artifactId>application-numbered-content-toc-macro</artifactId>
-      <version>${project.version}</version>
+      <version>${application.numbered.content.version}</version>
     </dependency>
     <!-- Runtime dependencies. -->
     <dependency>

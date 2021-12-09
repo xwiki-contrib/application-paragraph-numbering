@@ -26,7 +26,7 @@
   <parent>
     <groupId>org.xwiki.contrib</groupId>
     <artifactId>parent-platform</artifactId>
-    <version>13.8</version>
+    <version>13.10</version>
   </parent>
   
   <packaging>pom</packaging>

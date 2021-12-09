@@ -29,10 +29,7 @@
     <artifactId>application-paragraph-numbering</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-
   <artifactId>application-paragraph-numbering-macro</artifactId>
-
-  <version>1.0-SNAPSHOT</version>
   <name>Paragraph Numbering - Macro</name>
   <description>Automatically add numbering on the paragraphs in the body of the macro.</description>
   <properties>

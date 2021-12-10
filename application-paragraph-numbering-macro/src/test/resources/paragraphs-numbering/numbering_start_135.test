@@ -5,23 +5,23 @@
 .#-----------------------------------------------------
 {{paragraphs-numbering}}
 = t1 =
-(% start="3" %)
+(% data-numbered-headings-start="3" %)
 == t1.3 ==
-(% start="5" %)
+(% data-numbered-headings-start="5" %)
 === t1.3.5 ===
 {{/paragraphs-numbering}}
 .#-----------------------------------------------------
 .expect|xhtml/1.0
 .#-----------------------------------------------------
-<div class="paragraphs-numbering-root numbered-content-root"><h1 id="Ht1" class="wikigeneratedid wikigeneratedheader"><span>t1</span></h1><h2 id="Ht1.3" class="wikigeneratedid wikigeneratedheader" start="3"><span>t1.3</span></h2><h3 id="Ht1.3.5" class="wikigeneratedid wikigeneratedheader" start="5"><span>t1.3.5</span></h3></div>
+<div class="paragraphs-numbering-root numbered-content-root"><h1 id="Ht1" class="wikigeneratedid wikigeneratedheader"><span>t1</span></h1><h2 id="Ht1.3" class="wikigeneratedid wikigeneratedheader" data-numbered-headings-start="3"><span>t1.3</span></h2><h3 id="Ht1.3.5" class="wikigeneratedid wikigeneratedheader" data-numbered-headings-start="5"><span>t1.3.5</span></h3></div>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
 beginDocument
 beginMacroMarkerStandalone [paragraphs-numbering] [] [= t1 =
-(% start="3" %)
+(% data-numbered-headings-start="3" %)
 == t1.3 ==
-(% start="5" %)
+(% data-numbered-headings-start="5" %)
 === t1.3.5 ===]
 beginGroup [[class]=[paragraphs-numbering-root numbered-content-root]]
 beginMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
@@ -30,27 +30,27 @@ beginHeader [1, Ht1]
 onWord [t1]
 endHeader [1, Ht1]
 beginSection
-beginHeader [2, Ht1.3] [[start]=[3]]
+beginHeader [2, Ht1.3] [[data-numbered-headings-start]=[3]]
 onWord [t1]
 onSpecialSymbol [.]
 onWord [3]
-endHeader [2, Ht1.3] [[start]=[3]]
+endHeader [2, Ht1.3] [[data-numbered-headings-start]=[3]]
 beginSection
-beginHeader [3, Ht1.3.5] [[start]=[5]]
+beginHeader [3, Ht1.3.5] [[data-numbered-headings-start]=[5]]
 onWord [t1]
 onSpecialSymbol [.]
 onWord [3]
 onSpecialSymbol [.]
 onWord [5]
-endHeader [3, Ht1.3.5] [[start]=[5]]
+endHeader [3, Ht1.3.5] [[data-numbered-headings-start]=[5]]
 endSection
 endSection
 endSection
 endMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
 endGroup [[class]=[paragraphs-numbering-root numbered-content-root]]
 endMacroMarkerStandalone [paragraphs-numbering] [] [= t1 =
-(% start="3" %)
+(% data-numbered-headings-start="3" %)
 == t1.3 ==
-(% start="5" %)
+(% data-numbered-headings-start="5" %)
 === t1.3.5 ===]
 endDocument

@@ -35,7 +35,6 @@ require(['jquery', 'deferred!ckeditor',], function ($, ckeditorPromise) {
       if (!('xwiki-numberedParagraphs' in ckeditor.plugins.registered)) {
         ckeditor.plugins.add('xwiki-numberedParagraphs', {
           init: function (editor) {
-            console.log('INITIALIZING')
             handleEnterKey(editor)
           }
         });

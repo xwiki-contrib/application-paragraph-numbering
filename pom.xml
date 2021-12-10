@@ -20,8 +20,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
 -->
 
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.xwiki.contrib</groupId>
@@ -34,7 +33,7 @@
   <artifactId>application-paragraph-numbering</artifactId>
   <name>Paragraph Numbering - Parent Model</name>
   <description>Allows to automatically add number on paragraphs and sub-paragraphs</description>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.0</version>
   <developers>
     <developer>
       <id>mleduc</id>
@@ -60,7 +59,7 @@
     <connection>scm:git:git://github.com/xwiki-contrib/application-paragraph-numbering.git</connection>
     <developerConnection>scm:git:git@github.com:xwiki-contrib/application-paragraph-numbering.git</developerConnection>
     <url>https://github.com/xwiki-contrib/application-paragraph-numbering/tree/master</url>
-    <tag>HEAD</tag>
+    <tag>application-paragraph-numbering-1.0</tag>
   </scm>
   <properties>
     <xwiki.release.jira.skip>false</xwiki.release.jira.skip>

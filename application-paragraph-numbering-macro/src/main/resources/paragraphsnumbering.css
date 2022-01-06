@@ -18,8 +18,19 @@
 .paragraphs-numbering-root h3,
 .paragraphs-numbering-root h4,
 .paragraphs-numbering-root h5,
-.paragraphs-numbering-root h6 {
+.paragraphs-numbering-root h6,
+.paragraphs-numbering-root .wikimodel-emptyline {
   margin: 0 0 10px 0;
+}
+
+.paragraphs-numbering-root p > span,
+.paragraphs-numbering-root h1 > span,
+.paragraphs-numbering-root h2 > span,
+.paragraphs-numbering-root h3 > span,
+.paragraphs-numbering-root h4 > span,
+.paragraphs-numbering-root h5 > span,
+.paragraphs-numbering-root h6 > span {
+  display: inline-block;
 }
 
 .paragraphs-numbering-root h1::before,

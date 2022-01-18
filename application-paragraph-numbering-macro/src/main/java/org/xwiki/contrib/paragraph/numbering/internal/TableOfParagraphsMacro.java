@@ -29,7 +29,7 @@ import javax.inject.Singleton;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.phase.Initializable;
 import org.xwiki.component.phase.InitializationException;
-import org.xwiki.contrib.numbered.content.HeaderNumberingService;
+import org.xwiki.contrib.numbered.content.headings.HeadingsNumberingService;
 import org.xwiki.contrib.numbered.content.toc.TocTreeBuilder;
 import org.xwiki.contrib.paragraph.numbering.TableOfParagraphsMacroParameters;
 import org.xwiki.rendering.block.Block;
@@ -83,7 +83,7 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
 
     @Inject
     @Named("paragraphs")
-    private HeaderNumberingService headerNumberingService;
+    private HeadingsNumberingService headerNumberingService;
 
     /**
      * Default constructor. Create and initialize the macro descriptor.

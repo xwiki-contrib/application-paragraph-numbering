@@ -26,7 +26,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.numbered.content.headings.AbstractHeadersNumberingService;
+import org.xwiki.contrib.numbered.content.headings.AbstractHeadingsNumberingService;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.HeaderBlock;
 import org.xwiki.rendering.block.match.ClassBlockMatcher;
@@ -40,12 +40,12 @@ import org.xwiki.rendering.block.match.ClassBlockMatcher;
 @Component
 @Named("paragraphs")
 @Singleton
-public class ParagraphsNumberingService extends AbstractHeadersNumberingService
+public class ParagraphsNumberingService extends AbstractHeadingsNumberingService
 {
     private final ClassBlockMatcher classBlockMatcher = new ClassBlockMatcher(HeaderBlock.class);
 
     @Override
-    public List<HeaderBlock> getHeaderBlocks(Block rootBlock)
+    public List<HeaderBlock> getHeadingsBlocks(Block rootBlock)
     {
         List<HeaderBlock> list = new ArrayList<>();
         for (HeaderBlock block : rootBlock.<HeaderBlock>getBlocks(this.classBlockMatcher, Block.Axes.DESCENDANT)) {

@@ -22,7 +22,7 @@
 .#-----------------------------------------------------
 .expect|xhtml/1.0
 .#-----------------------------------------------------
-<ul><li><span class="wikilink"><a href="#HH1">H1</a></span></li><li><span class="wikilink"><a href="#HH2">H2</a></span></li></ul><ul><li><span class="wikilink"><a href="#HP1">1 P1</a></span></li><li><span class="wikilink"><a href="#HP2">1 P2</a></span></li></ul><div class="paragraphs-numbering-root numbered-content-root"><ul><li><span class="wikilink"><a href="#HP1">1&nbsp;P1</a></span></li></ul><h1 id="HP1" class="wikigeneratedid wikigeneratedheader"><span>P1</span></h1></div><h1 id="HH1" class="wikigeneratedid"><span>H1</span></h1><div class="paragraphs-numbering-root numbered-content-root"><ul><li><span class="wikilink"><a href="#HP2">1&nbsp;P2</a></span></li></ul><h1 id="HP2" class="wikigeneratedid wikigeneratedheader"><span>P2</span></h1></div><h1 id="HH2" class="wikigeneratedid"><span>H2</span></h1>
+<ul><li><span class="wikilink"><a href="#HH1">H1</a></span></li><li><span class="wikilink"><a href="#HH2">H2</a></span></li></ul><ul><li><span class="wikilink"><a href="#HP1">1 P1</a></span></li><li><span class="wikilink"><a href="#HP2">1 P2</a></span></li></ul><div class="paragraphs-numbering-root numbered-content-root"><ul><li><span class="wikilink"><a href="#HP1">1 P1</a></span></li></ul><h1 id="HP1" class="wikigeneratedid wikigeneratedheader"><span>P1</span></h1></div><h1 id="HH1" class="wikigeneratedid"><span>H1</span></h1><div class="paragraphs-numbering-root numbered-content-root"><ul><li><span class="wikilink"><a href="#HP2">1 P2</a></span></li></ul><h1 id="HP2" class="wikigeneratedid wikigeneratedheader"><span>P2</span></h1></div><h1 id="HH2" class="wikigeneratedid"><span>H2</span></h1>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
@@ -45,14 +45,14 @@ beginMacroMarkerStandalone [top] []
 beginList [BULLETED]
 beginListItem
 beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP1]]] [false]
-onRawText [1] [xhtml/1.0]
+onWord [1]
 onSpace
 onWord [P1]
 endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP1]]] [false]
 endListItem
 beginListItem
 beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP2]]] [false]
-onRawText [1] [xhtml/1.0]
+onWord [1]
 onSpace
 onWord [P2]
 endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP2]]] [false]
@@ -65,7 +65,7 @@ beginMacroMarkerStandalone [top] [scope=LOCAL]
 beginList [BULLETED]
 beginListItem
 beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP1]]] [false]
-onRawText [1] [xhtml/1.0]
+onWord [1]
 onSpace
 onWord [P1]
 endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP1]]] [false]
@@ -91,7 +91,7 @@ beginMacroMarkerStandalone [top] [scope=LOCAL]
 beginList [BULLETED]
 beginListItem
 beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP2]]] [false]
-onRawText [1] [xhtml/1.0]
+onWord [1]
 onSpace
 onWord [P2]
 endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP2]]] [false]

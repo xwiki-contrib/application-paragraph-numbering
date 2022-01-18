@@ -43,7 +43,7 @@ import org.xwiki.skinx.SkinExtension;
 
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
-import static org.xwiki.contrib.numbered.content.HeaderNumberingService.NUMBERED_CONTENT_ROOT_CLASS;
+import static org.xwiki.contrib.numbered.content.headings.HeadingsNumberingService.NUMBERED_CONTENT_ROOT_CLASS;
 import static org.xwiki.rendering.block.Block.LIST_BLOCK_TYPE;
 import static org.xwiki.rendering.macro.toc.TocMacroParameters.Scope.LOCAL;
 

@@ -26,14 +26,18 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.paragraph.numbering.ParagraphsNumberingMacroParameters;
 import org.xwiki.contrib.paragraph.numbering.internal.util.ExecutionContextService;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.GroupBlock;
+import org.xwiki.rendering.block.HeaderBlock;
 import org.xwiki.rendering.block.MacroBlock;
 import org.xwiki.rendering.block.MetaDataBlock;
+import org.xwiki.rendering.block.SectionBlock;
 import org.xwiki.rendering.block.XDOM;
+import org.xwiki.rendering.listener.HeaderLevel;
 import org.xwiki.rendering.macro.AbstractMacro;
 import org.xwiki.rendering.macro.MacroContentParser;
 import org.xwiki.rendering.macro.MacroExecutionException;
@@ -41,6 +45,7 @@ import org.xwiki.rendering.macro.descriptor.DefaultContentDescriptor;
 import org.xwiki.rendering.transformation.MacroTransformationContext;
 import org.xwiki.skinx.SkinExtension;
 
+import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
 import static org.xwiki.contrib.numbered.content.headings.HeadingsNumberingService.NUMBERED_CONTENT_ROOT_CLASS;
@@ -113,7 +118,13 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
             blocks.add(new MacroBlock("top", singletonMap("scope", LOCAL.name()), false));
         }
 
-        XDOM parse = this.contentParser.parse(content, context, false, context.isInline());
+        XDOM parse;
+        if (StringUtils.isBlank(content)) {
+            parse = new XDOM(
+                singletonList(new SectionBlock(singletonList(new HeaderBlock(emptyList(), HeaderLevel.LEVEL1)))));
+        } else {
+            parse = this.contentParser.parse(content, context, false, context.isInline());
+        }
 
         // Exclude the edit block when exporting since it cannot be hidden using css.
         if (!this.executionContextService.isExporting()) {

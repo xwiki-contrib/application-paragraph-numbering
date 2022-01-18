@@ -1,0 +1,25 @@
+.runTransformations:macro
+.#-----------------------------------------------------
+.input|xwiki/2.1
+.# Test the macro on the case where the content is empty. In this case a level 1 heading is expected to be rendered.
+.#-----------------------------------------------------
+{{paragraphs-numbering/}}
+.#-----------------------------------------------------
+.expect|xhtml/1.0
+.#-----------------------------------------------------
+<div class="paragraphs-numbering-root numbered-content-root"><h1 class="wikigeneratedid wikigeneratedheader"><span></span></h1></div>
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+beginMacroMarkerStandalone [paragraphs-numbering] []
+beginGroup [[class]=[paragraphs-numbering-root numbered-content-root]]
+beginMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
+beginSection
+beginHeader [1, null]
+endHeader [1, null]
+endSection
+endMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
+endGroup [[class]=[paragraphs-numbering-root numbered-content-root]]
+endMacroMarkerStandalone [paragraphs-numbering] []
+endDocument

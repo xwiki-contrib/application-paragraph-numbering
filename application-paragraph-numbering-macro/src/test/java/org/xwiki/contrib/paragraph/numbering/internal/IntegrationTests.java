@@ -19,12 +19,6 @@
  */
 package org.xwiki.contrib.paragraph.numbering.internal;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.xwiki.cache.Cache;
-import org.xwiki.cache.CacheManager;
-import org.xwiki.contrib.numbered.content.headings.internal.DefaultHeadingsNumberingCacheManager;
 import org.xwiki.contrib.paragraph.numbering.internal.util.ExecutionContextService;
 import org.xwiki.rendering.test.integration.TestDataParser;
 import org.xwiki.rendering.test.integration.junit5.RenderingTests;
@@ -32,9 +26,6 @@ import org.xwiki.skinx.SkinExtension;
 import org.xwiki.test.annotation.AllComponents;
 import org.xwiki.test.mockito.MockitoComponentManager;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doAnswer;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -45,7 +36,6 @@ import static org.mockito.Mockito.when;
  * @since 1.0
  */
 @AllComponents
-//@RenderingTests.Scope(value = "paragraphs-numbering/numbering_toc")
 public class IntegrationTests implements RenderingTests
 {
     @RenderingTests.Initialized
@@ -54,19 +44,9 @@ public class IntegrationTests implements RenderingTests
         componentManager.registerMockComponent(SkinExtension.class, "ssrx");
         componentManager.registerMockComponent(SkinExtension.class, "ssx");
         componentManager.registerMockComponent(SkinExtension.class, "jsrx");
-        CacheManager cacheManager = componentManager.registerMockComponent(CacheManager.class);
 
         ExecutionContextService executionContextService =
             componentManager.registerMockComponent(ExecutionContextService.class);
         when(executionContextService.isExporting()).thenReturn(false);
-
-        Cache<DefaultHeadingsNumberingCacheManager.CachedValue> cache = mock(Cache.class);
-        Map<String, DefaultHeadingsNumberingCacheManager.CachedValue> map = new HashMap<>();
-        doAnswer(invocation -> {
-            map.put(invocation.getArgument(0), invocation.getArgument(1));
-            return null;
-        }).when(cache).set(any(), any());
-        doAnswer(invocation -> map.get(invocation.getArgument(0))).when(cache).get(any());
-        when(cacheManager.<DefaultHeadingsNumberingCacheManager.CachedValue>createNewCache(any())).thenReturn(cache);
     }
 }

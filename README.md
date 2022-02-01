@@ -8,7 +8,7 @@ Allows to automatically add number on paragraphs and sub-paragraphs.
 * [Issue Tracker](http://jira.xwiki.org/browse/PNAPP)
 * Communication: [Forum](https://forum.xwiki.org/), [Chat](https://dev.xwiki.org/xwiki/bin/view/Community/Chat)
 * [Development Practices](http://dev.xwiki.org/) 
-* Minimal XWiki version supported: 13.8+
+* Minimal XWiki version supported: 14.0+
 * License: LGPL 2.1
 * Translations: https://l10n.xwiki.org/projects/xwiki-contrib/application-paragraph-numbering-paragraph-numbering-macro-page-properties/
 * Sonar Dashboard: N/A 

@@ -54,7 +54,7 @@
     </dependency>
     <dependency>
       <groupId>org.xwiki.contrib.numbered.content</groupId>
-      <artifactId>application-numbered-content-toc-macro</artifactId>
+      <artifactId>application-numbered-content-headings-toc</artifactId>
       <version>${application.numbered.content.version}</version>
     </dependency>
     <!-- Runtime dependencies. -->

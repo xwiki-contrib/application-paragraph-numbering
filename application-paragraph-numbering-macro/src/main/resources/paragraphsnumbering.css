@@ -33,6 +33,17 @@
   display: inline-block;
 }
 
+.paragraphs-numbering-root p > span:empty:after,
+.paragraphs-numbering-root h1 > span:empty:after,
+.paragraphs-numbering-root h2 > span:empty:after,
+.paragraphs-numbering-root h3 > span:empty:after,
+.paragraphs-numbering-root h4 > span:empty:after,
+.paragraphs-numbering-root h5 > span:empty:after,
+.paragraphs-numbering-root h6 > span:empty:after {
+  display: inline-block;
+  content: "";
+}
+
 .paragraphs-numbering-root h1::before,
 .paragraphs-numbering-root h2::before,
 .paragraphs-numbering-root h3::before,

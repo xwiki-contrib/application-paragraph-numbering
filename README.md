@@ -10,6 +10,8 @@ Allows to automatically add number on paragraphs and sub-paragraphs.
 * [Development Practices](http://dev.xwiki.org/) 
 * Minimal XWiki version supported: 14.0+
 * License: LGPL 2.1
-* Translations: https://l10n.xwiki.org/projects/xwiki-contrib/application-paragraph-numbering-paragraph-numbering-macro-page-properties/
+* Translations: 
+  * [Application Paragraph Numbering - Macro ](https://l10n.xwiki.org/projects/xwiki-contrib/application-paragraph-numbering-macro/)
+  * [Application Paragraph Numbering - UI](https://l10n.xwiki.org/projects/xwiki-contrib/application-paragraph-numbering-ui/)
 * Sonar Dashboard: N/A 
 * Continuous Integration Status: [![Build Status](https://ci.xwiki.org/buildStatus/icon?job=XWiki+Contrib%2Fapplication-paragraph-numbering%2Fmain)](https://ci.xwiki.org/job/XWiki%20Contrib/job/application-paragraph-numbering/job/main/)

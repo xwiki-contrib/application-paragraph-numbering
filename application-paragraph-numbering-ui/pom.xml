@@ -42,5 +42,21 @@
       <version>${project.version}</version>
       <scope>runtime</scope>
     </dependency>
+    <!-- Runtime dependencies. -->
+    <dependency>
+      <groupId>org.xwiki.contrib.numbered.content</groupId>
+      <artifactId>application-numbered-content-headings-ui</artifactId>
+      <version>${application.numbered.content.version}</version>
+      <scope>runtime</scope>
+      <type>xar</type>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-ckeditor-ui</artifactId>
+      <version>${platform.version}</version>
+      <scope>runtime</scope>
+      <optional>true</optional>
+      <type>xar</type>
+    </dependency>
   </dependencies>
 </project>

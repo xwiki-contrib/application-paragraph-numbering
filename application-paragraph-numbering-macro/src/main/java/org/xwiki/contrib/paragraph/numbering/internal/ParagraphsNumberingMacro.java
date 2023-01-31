@@ -21,6 +21,7 @@ package org.xwiki.contrib.paragraph.numbering.internal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -97,7 +98,7 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
     {
         super("Paragraphs Numbering", "Automatically add numbers on the paragraphs contained in the body of the macro",
             new DefaultContentDescriptor("body", false, LIST_BLOCK_TYPE), ParagraphsNumberingMacroParameters.class);
-        setDefaultCategory(DEFAULT_CATEGORY_NAVIGATION);
+        setDefaultCategories(Set.of(DEFAULT_CATEGORY_NAVIGATION));
     }
 
     @Override

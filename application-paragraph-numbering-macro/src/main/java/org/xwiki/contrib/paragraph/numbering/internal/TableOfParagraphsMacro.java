@@ -21,6 +21,7 @@ package org.xwiki.contrib.paragraph.numbering.internal;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -95,7 +96,7 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
         // Make sure this macro is executed as one of the last macros to be executed since other macros can generate
         // paragraphs which need to be taken into account by the TOP macro.
         setPriority(2000);
-        setDefaultCategory(DEFAULT_CATEGORY_NAVIGATION);
+        setDefaultCategories(Set.of(DEFAULT_CATEGORY_NAVIGATION));
     }
 
     @Override

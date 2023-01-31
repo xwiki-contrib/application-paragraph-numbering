@@ -47,10 +47,6 @@ public class ParagraphsNumberingService extends AbstractHeadingsNumberingService
     @Override
     public List<HeaderBlock> getHeadingsBlocks(Block rootBlock)
     {
-        List<HeaderBlock> list = new ArrayList<>();
-        for (HeaderBlock block : rootBlock.<HeaderBlock>getBlocks(this.classBlockMatcher, Block.Axes.DESCENDANT)) {
-            list.add(block);
-        }
-        return list;
+        return new ArrayList<>(rootBlock.getBlocks(this.classBlockMatcher, Block.Axes.DESCENDANT));
     }
 }

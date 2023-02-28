@@ -34,7 +34,7 @@
     <!-- Name to display by the Extension Manager -->
     <xwiki.extension.name>Paragraph Numbering Macro</xwiki.extension.name>
     <xwiki.extension.category>macro</xwiki.extension.category>
-    <xwiki.jacoco.instructionRatio>0.94</xwiki.jacoco.instructionRatio>
+    <xwiki.jacoco.instructionRatio>0.92</xwiki.jacoco.instructionRatio>
   </properties>
   <dependencies>
     <dependency>

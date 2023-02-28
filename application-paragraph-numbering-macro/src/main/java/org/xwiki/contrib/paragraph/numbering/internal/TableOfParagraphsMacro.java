@@ -28,24 +28,22 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
+import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.phase.Initializable;
 import org.xwiki.component.phase.InitializationException;
-import org.xwiki.contrib.numbered.content.headings.HeadingsNumberingService;
 import org.xwiki.contrib.numbered.content.toc.TocTreeBuilder;
+import org.xwiki.contrib.numbered.content.toc.TocTreeBuilderFactory;
 import org.xwiki.contrib.paragraph.numbering.TableOfParagraphsMacroParameters;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.BulletedListBlock;
 import org.xwiki.rendering.block.MetaDataBlock;
 import org.xwiki.rendering.block.match.ClassBlockMatcher;
 import org.xwiki.rendering.block.match.MacroMarkerBlockMatcher;
-import org.xwiki.rendering.internal.macro.toc.TocBlockFilter;
 import org.xwiki.rendering.internal.macro.toc.TreeParameters;
 import org.xwiki.rendering.internal.macro.toc.TreeParametersBuilder;
 import org.xwiki.rendering.macro.AbstractMacro;
 import org.xwiki.rendering.macro.MacroExecutionException;
 import org.xwiki.rendering.macro.toc.TocMacroParameters;
-import org.xwiki.rendering.parser.Parser;
-import org.xwiki.rendering.renderer.reference.link.LinkLabelGenerator;
 import org.xwiki.rendering.transformation.MacroTransformationContext;
 
 import static java.util.Collections.singletonList;
@@ -69,22 +67,8 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
 
     private TocTreeBuilder tocTreeBuilder;
 
-    /**
-     * A parser that knows how to parse plain text; this is used to transform link labels into plain text.
-     */
     @Inject
-    @Named("plain/1.0")
-    private Parser plainTextParser;
-
-    /**
-     * Generate link label.
-     */
-    @Inject
-    private LinkLabelGenerator linkLabelGenerator;
-
-    @Inject
-    @Named("paragraphs")
-    private HeadingsNumberingService headerNumberingService;
+    private TocTreeBuilderFactory tocTreeBuilderFactory;
 
     /**
      * Default constructor. Create and initialize the macro descriptor.
@@ -103,8 +87,12 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
     public void initialize() throws InitializationException
     {
         super.initialize();
-        this.tocTreeBuilder = new TocTreeBuilder(new TocBlockFilter(this.plainTextParser, this.linkLabelGenerator),
-            this.headerNumberingService);
+
+        try {
+            this.tocTreeBuilder = this.tocTreeBuilderFactory.build("paragraphs");
+        } catch (ComponentLookupException e) {
+            throw new InitializationException(String.format("Failed to initialize [%s]", TocTreeBuilder.class), e);
+        }
     }
 
     @Override
@@ -148,7 +136,7 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
             macroParameters.setNumbered(false);
             macroParameters.setDepth(depth);
             TreeParameters treeParameters = builder.build(root, macroParameters, context);
-            List<Block> build = this.tocTreeBuilder.build(treeParameters, true);
+            List<Block> build = this.tocTreeBuilder.build(treeParameters);
             if (!build.isEmpty()) {
                 items.addAll(build.get(0).getChildren());
             }

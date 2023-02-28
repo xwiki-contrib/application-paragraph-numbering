@@ -30,7 +30,6 @@ import javax.inject.Singleton;
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.paragraph.numbering.ParagraphsNumberingMacroParameters;
-import org.xwiki.contrib.paragraph.numbering.internal.util.ExecutionContextService;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.GroupBlock;
 import org.xwiki.rendering.block.HeaderBlock;
@@ -70,9 +69,6 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
     public static final String PARAGRAPHS_NUMBERING_MACRO = "paragraphs-numbering";
 
     private static final String CLASS_PARAMETER = "class";
-
-    @Inject
-    private ExecutionContextService executionContextService;
 
     /**
      * The component used to import style-sheet file extensions.
@@ -128,9 +124,8 @@ public class ParagraphsNumberingMacro extends AbstractMacro<ParagraphsNumberingM
         }
 
         // Exclude the edit block when exporting since it cannot be hidden using css.
-        if (!this.executionContextService.isExporting()) {
-            blocks.add(new MetaDataBlock(parse.getChildren(), getNonGeneratedContentMetaData()));
-        }
+        blocks.add(new MetaDataBlock(parse.getChildren(), getNonGeneratedContentMetaData()));
+
         return singletonList(
             new GroupBlock(blocks, singletonMap(CLASS_PARAMETER,
                 String.format("paragraphs-numbering-root %s", NUMBERED_CONTENT_ROOT_CLASS))));

@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.paragraph.numbering.internal;
 
+import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.contrib.paragraph.numbering.internal.util.ExecutionContextService;
 import org.xwiki.rendering.test.integration.TestDataParser;
 import org.xwiki.rendering.test.integration.junit5.RenderingTests;
@@ -41,6 +42,8 @@ public class IntegrationTests implements RenderingTests
     @RenderingTests.Initialized
     public void initialize(MockitoComponentManager componentManager) throws Exception
     {
+        componentManager.registerComponent(ComponentManager.class, "context",
+            componentManager.getInstance(ComponentManager.class));
         componentManager.registerMockComponent(SkinExtension.class, "ssrx");
         componentManager.registerMockComponent(SkinExtension.class, "ssx");
         componentManager.registerMockComponent(SkinExtension.class, "jsrx");

@@ -22,7 +22,7 @@
 .#-----------------------------------------------------
 .expect|xhtml/1.0
 .#-----------------------------------------------------
-<ul class="wikitoc"><li><span class="wikilink"><a href="#HH1">H1</a></span></li><li><span class="wikilink"><a href="#HH2">H2</a></span></li></ul><ul><li><span class="wikilink"><a href="#HP1">1 P1</a></span></li><li><span class="wikilink"><a href="#HP2">2 P2</a></span></li></ul><div class="paragraphs-numbering-root numbered-content-root"><ul><li><span class="wikilink"><a href="#HP1">1 P1</a></span></li></ul><h1 id="HP1" class="wikigeneratedid wikigeneratedheader"><span>P1</span></h1></div><h1 id="HH1" class="wikigeneratedid"><span>H1</span></h1><div class="paragraphs-numbering-root numbered-content-root"><ul><li><span class="wikilink"><a href="#HP2">2 P2</a></span></li></ul><h1 id="HP2" class="wikigeneratedid wikigeneratedheader"><span>P2</span></h1></div><h1 id="HH2" class="wikigeneratedid"><span>H2</span></h1>
+<ul class="wikitoc"><li><span class="wikilink"><a href="#HH1">H1</a></span></li><li><span class="wikilink"><a href="#HH2">H2</a></span></li></ul><ul class="wikitop"><li><span class="wikilink"><a href="#HP1">1 P1</a></span></li><li><span class="wikilink"><a href="#HP2">2 P2</a></span></li></ul><div class="paragraphs-numbering-root numbered-content-root"><ul class="wikitop"><li><span class="wikilink"><a href="#HP1">1 P1</a></span></li></ul><h1 id="HP1" class="wikigeneratedid wikigeneratedheader"><span>P1</span></h1></div><h1 id="HH1" class="wikigeneratedid"><span>H1</span></h1><div class="paragraphs-numbering-root numbered-content-root"><ul class="wikitop"><li><span class="wikilink"><a href="#HP2">2 P2</a></span></li></ul><h1 id="HP2" class="wikigeneratedid wikigeneratedheader"><span>P2</span></h1></div><h1 id="HH2" class="wikigeneratedid"><span>H2</span></h1>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
@@ -42,7 +42,7 @@ endListItem
 endList [BULLETED] [[class]=[wikitoc]]
 endMacroMarkerStandalone [toc] []
 beginMacroMarkerStandalone [top] []
-beginList [BULLETED]
+beginList [BULLETED] [[class]=[wikitop]]
 beginListItem
 beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP1]]] [false]
 onWord [1]
@@ -57,12 +57,12 @@ onSpace
 onWord [P2]
 endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP2]]] [false]
 endListItem
-endList [BULLETED]
+endList [BULLETED] [[class]=[wikitop]]
 endMacroMarkerStandalone [top] []
 beginMacroMarkerStandalone [paragraphs-numbering] [tableOfParagraphs=true] [= P1 =]
 beginGroup [[class]=[paragraphs-numbering-root numbered-content-root]]
 beginMacroMarkerStandalone [top] [scope=LOCAL]
-beginList [BULLETED]
+beginList [BULLETED] [[class]=[wikitop]]
 beginListItem
 beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP1]]] [false]
 onWord [1]
@@ -70,7 +70,7 @@ onSpace
 onWord [P1]
 endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP1]]] [false]
 endListItem
-endList [BULLETED]
+endList [BULLETED] [[class]=[wikitop]]
 endMacroMarkerStandalone [top] [scope=LOCAL]
 beginMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
 beginSection
@@ -88,7 +88,7 @@ endHeader [1, HH1]
 beginMacroMarkerStandalone [paragraphs-numbering] [tableOfParagraphs=true] [= P2 =]
 beginGroup [[class]=[paragraphs-numbering-root numbered-content-root]]
 beginMacroMarkerStandalone [top] [scope=LOCAL]
-beginList [BULLETED]
+beginList [BULLETED] [[class]=[wikitop]]
 beginListItem
 beginLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP2]]] [false]
 onWord [2]
@@ -96,7 +96,7 @@ onSpace
 onWord [P2]
 endLink [Typed = [true] Type = [doc] Parameters = [[anchor] = [HP2]]] [false]
 endListItem
-endList [BULLETED]
+endList [BULLETED] [[class]=[wikitop]]
 endMacroMarkerStandalone [top] [scope=LOCAL]
 beginMetaData [[non-generated-content]=[java.util.List<org.xwiki.rendering.block.Block>]]
 beginSection

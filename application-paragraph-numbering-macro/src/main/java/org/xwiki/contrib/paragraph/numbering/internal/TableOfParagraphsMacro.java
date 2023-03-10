@@ -45,6 +45,7 @@ import org.xwiki.rendering.macro.AbstractMacro;
 import org.xwiki.rendering.macro.MacroExecutionException;
 import org.xwiki.rendering.macro.toc.TocMacroParameters;
 import org.xwiki.rendering.transformation.MacroTransformationContext;
+import org.xwiki.skinx.SkinExtension;
 
 import static java.util.Collections.singletonList;
 import static org.xwiki.contrib.paragraph.numbering.TableOfParagraphsMacroParameters.Scope.PAGE;
@@ -69,6 +70,10 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
 
     @Inject
     private TocTreeBuilderFactory tocTreeBuilderFactory;
+
+    @Inject
+    @Named("ssrx")
+    private SkinExtension ssfx;
 
     /**
      * Default constructor. Create and initialize the macro descriptor.
@@ -105,6 +110,7 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
     public List<Block> execute(TableOfParagraphsMacroParameters parameters, String content,
         MacroTransformationContext context) throws MacroExecutionException
     {
+        this.ssfx.use("top.css");
         int depth = parameters.getDepth();
         if (depth <= 0) {
             throw new MacroExecutionException(
@@ -142,6 +148,8 @@ public class TableOfParagraphsMacro extends AbstractMacro<TableOfParagraphsMacro
             }
         }
 
-        return singletonList(new BulletedListBlock(items));
+        BulletedListBlock tableOfParagraphs = new BulletedListBlock(items);
+        tableOfParagraphs.setParameter("class", "wikitop");
+        return singletonList(tableOfParagraphs);
     }
 }

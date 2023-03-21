@@ -4,7 +4,7 @@ Allows to automatically add number on paragraphs and sub-paragraphs.
 
 * Project Lead: [Manuel Leduc](https://www.xwiki.org/xwiki/bin/view/XWiki/mleduc) 
 * [Design page](https://design.xwiki.org/xwiki/bin/view/Proposal/ParagraphNumbering)
-* Documentation & Download: N/A
+* [Documentation & Download](https://extensions.xwiki.org/xwiki/bin/view/Extension/Paragraph%20Numbering%20Application/)
 * [Issue Tracker](http://jira.xwiki.org/browse/PNAPP)
 * Communication: [Forum](https://forum.xwiki.org/), [Chat](https://dev.xwiki.org/xwiki/bin/view/Community/Chat)
 * [Development Practices](http://dev.xwiki.org/) 

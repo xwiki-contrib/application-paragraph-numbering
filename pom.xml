@@ -57,7 +57,7 @@
   <properties>
     <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
     <xwiki.issueManagement.jira.id>PNAPP</xwiki.issueManagement.jira.id>
-    <application.numbered.content.version>1.8.2</application.numbered.content.version>
+    <application.numbered.content.version>1.10.1</application.numbered.content.version>
   </properties>
   <modules>
     <module>application-paragraph-numbering-macro</module>

@@ -24,7 +24,7 @@
   <parent>
     <groupId>org.xwiki.contrib.paragraph.numbering</groupId>
     <artifactId>application-paragraph-numbering</artifactId>
-    <version>1.3.1</version>
+    <version>1.3.2-SNAPSHOT</version>
   </parent>
   <artifactId>application-paragraph-numbering-ui</artifactId>
   <name>Paragraph Numbering - UI</name>

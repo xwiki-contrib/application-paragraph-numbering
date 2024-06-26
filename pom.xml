@@ -33,7 +33,7 @@
   <artifactId>application-paragraph-numbering</artifactId>
   <name>Paragraph Numbering - Parent Model</name>
   <description>Allows to automatically add number on paragraphs and sub-paragraphs</description>
-  <version>1.3.1</version>
+  <version>1.3.2-SNAPSHOT</version>
   <developers>
     <developer>
       <id>mleduc</id>
@@ -52,7 +52,7 @@
     <connection>scm:git:git://github.com/xwiki-contrib/application-paragraph-numbering.git</connection>
     <developerConnection>scm:git:git@github.com:xwiki-contrib/application-paragraph-numbering.git</developerConnection>
     <url>https://github.com/xwiki-contrib/application-paragraph-numbering/tree/master</url>
-    <tag>application-paragraph-numbering-1.3.1</tag>
+    <tag>HEAD</tag>
   </scm>
   <properties>
     <xwiki.release.jira.skip>false</xwiki.release.jira.skip>

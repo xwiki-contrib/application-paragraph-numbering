@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.xwiki.contrib.paragraph.numbering</groupId>
     <artifactId>application-paragraph-numbering</artifactId>
-    <version>1.3.1-SNAPSHOT</version>
+    <version>1.3.1</version>
   </parent>
   <artifactId>application-paragraph-numbering-macro</artifactId>
   <name>Paragraph Numbering - Macro</name>

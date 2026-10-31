@@ -36,9 +36,9 @@
   <minorEdit>false</minorEdit>
   <syntaxId>plain/1.0</syntaxId>
   <hidden>true</hidden>
-  <content>### Missing: paragraphs.numbering.codeSpace.title=
-### Missing: paragraphs.numbering.codeSpace.description=
-### Missing: paragraphs.numbering.template.name=
-### Missing: paragraphs.numbering.template.description=
+  <content>paragraphs.numbering.codeSpace.title=Kode
+paragraphs.numbering.codeSpace.description=Her ligger koden til programmet til nummerering af afsnit.
+paragraphs.numbering.template.name=Skabelon til nummerering af afsnit
+paragraphs.numbering.template.description=Opretter en side, der starter med makroen til nummerering af afsnit.
 </content>
 </xwikidoc>
